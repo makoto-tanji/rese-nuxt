@@ -43,6 +43,8 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    //以下1文追加
+    '@nuxtjs/auth-next'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -53,5 +55,21 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+  },
+
+  // 以下auth追加
+  auth: {
+    strategies: {
+      'laravelJWT': {
+        provider: 'laravel/jwt',
+        url: 'http://localhost:8000',
+        token: {
+          maxAge: 60 * 60
+        },
+        refreshToken: {
+          maxAge: 20160 * 60
+        }
+      },
+    },
+  },
 }

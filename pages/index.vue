@@ -7,15 +7,25 @@
       </div>
     </div>
     <div class="main-container">
-      <div v-for="item in shopLists" :key="item.id" class="shop-card">
+      <div
+        v-for="item in shopLists"
+        :key="item.id"
+        class="shop-card"
+      >
         <div class="content-img">
           <img :src="item.img_url" alt="" class="card-img">
         </div>
         <div class="content-info">
           <h2 class="shop-name">{{ item.name }}</h2>
           <div class="content-tags">
-            <p class="tags">#{{ item.area_id }}</p>
-            <p class="tags"></p>
+            <p class="tags">#{{ item.area.area_name}}</p>
+            <div
+              v-for="category in item.category_shop"
+              :key="category.id"
+              class="category-container"
+            >
+              <p class="tags">#{{ category.category_name }}</p>
+            </div>
           </div>
         </div>
         <div class="content-btn">
@@ -30,7 +40,8 @@
 export default {
   data() {
     return {
-      shopLists: ""
+      shopLists: "",
+      categoryLists: "",
     }
   }, // end data
   methods: {

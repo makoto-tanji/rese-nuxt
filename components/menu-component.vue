@@ -24,10 +24,15 @@
       v-show="menuIsOpened == true"
       class="menu-content"
     >
-      <ul>
+      <ul v-if="!$auth.loggedIn">
         <li><NuxtLink to="/">Home</NuxtLink></li>
-        <li><a href="#" class="main-color">Logout</a></li>
-        <li><a href="#" class="main-color">Mypage</a></li>
+        <li><NuxtLink to="/register">Registration</NuxtLink></li>
+        <li><NuxtLink to="/login">Login</NuxtLink></li>
+      </ul>
+      <ul v-if="$auth.loggedIn">
+        <li><NuxtLink to="/">Home</NuxtLink></li>
+        <li><NuxtLink to="/logout">logout</NuxtLink></li>
+        <li><NuxtLink to="/mypage">Mypage</NuxtLink></li>
       </ul>
     </div>
   </transition>

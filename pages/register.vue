@@ -4,25 +4,67 @@
     <div class="main-container">
       <div class="card">
         <div class="ttl-container main-bg-color">Registration</div>
-        <div class="form-container">
+        <form @submit.prevent="register" class="form-container">
           <div class="input-container">
             <img src="" alt="img">
-            <input type="text" placeholder="Username">
+            <input
+              type="text"
+              v-model="name"
+              placeholder="Username"
+              required
+            >
           </div>
           <div class="input-container">
             <img src="" alt="img">
-            <input type="email" placeholder="Email">
+            <input
+              type="email"
+              v-model="email"
+              placeholder="Email"
+              required
+            >
           </div>
           <div class="input-container">
             <img src="" alt="img">
-            <input type="password" placeholder="Password">
+            <input
+              type="password"
+              v-model="password"
+              placeholder="Password"
+              required
+            >
           </div>
           <button class="btn main-bg-color">登録</button>
-        </div>
+        </form>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  auth: false,
+  data() {
+    return {
+      name: null,
+      email: null,
+      password: null,
+    };
+  }, // end data
+  methods:{
+    async register() {
+      try {
+        await this.$axios.post("http://localhost:8000/api/auth/register", {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+        });
+        this.$router.push("/login");
+      } catch {
+        alert("メールアドレスがすでに登録されています");
+      }
+    },
+  } // end methods
+}
+</script>
 
 <style scoped>
 .main-container{

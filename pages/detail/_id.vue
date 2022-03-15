@@ -10,7 +10,14 @@
           <img :src="shopData.img_url" alt="" class="img">
         </div>
         <div class="content-tags">
-          <p class="tags">#{{ shopData.area_id }}</p>
+          <p class="tags">#{{ areaName }}</p>
+          <div
+              v-for="category in shopData.category_shop"
+              :key="category.id"
+              class="category-container"
+            >
+              <p class="tags">#{{ category.category_name }}</p>
+            </div>
         </div>
         <div class="content-overview">
           <p>{{ shopData.overview }}</p>
@@ -25,7 +32,9 @@
 export default {
   data() {
     return {
-      shopData: ""
+      shopData: "",
+      // Cannot read properties of undefined(reading 'area_name')
+      areaName: ""
     }
   }, // end data
   methods: {
@@ -34,6 +43,7 @@ export default {
         'http://127.0.0.1:8000/api/shop/' + this.$route.params.id
       );
       this.shopData = resData.data.data[0];
+      this.areaName = resData.data.data[0].area.area_name;
     }
   }, // end methods
   created() {
