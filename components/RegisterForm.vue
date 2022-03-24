@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="register" class="form-container">
     <div class="input-container">
-      <img src="" alt="img">
+      <v-icon>{{ iconAccount }}</v-icon>
       <input
         type="text"
         v-model="name"
@@ -10,7 +10,7 @@
       >
     </div>
     <div class="input-container">
-      <img src="" alt="img">
+      <v-icon>{{ iconEmail }}</v-icon>
       <input
         type="email"
         v-model="email"
@@ -19,7 +19,7 @@
       >
     </div>
     <div class="input-container">
-      <img src="" alt="img">
+      <v-icon>{{ iconLock }}</v-icon>
       <input
         type="password"
         v-model="password"
@@ -32,6 +32,10 @@
 </template>
 
 <script>
+import { mdiAccount } from '@mdi/js'
+import { mdiEmail } from '@mdi/js'
+import { mdiLock } from '@mdi/js'
+
 export default {
   auth: false,
   data() {
@@ -39,6 +43,10 @@ export default {
       name: null,
       email: null,
       password: null,
+      // MDI
+      iconAccount: mdiAccount,
+      iconEmail: mdiEmail,
+      iconLock: mdiLock
     };
   }, // end data
   methods:{
@@ -79,7 +87,7 @@ input{
   border-bottom: 1px solid #000;
 }
 .btn{
-  padding: 5px 15px;
+  padding: 10px 15px;
   border: none;
   border-radius: 5px;
   margin: 15px 0px 0px auto;

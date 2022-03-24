@@ -19,6 +19,7 @@
     "webpack": "^4.46.0"
   },
   "devDependencies": {
+    "@mdi/js": "^6.6.95",
     "@nuxtjs/vuetify": "^1.12.3"
   }
 }
