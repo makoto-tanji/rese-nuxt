@@ -37,6 +37,13 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    // 以下追加
+    // Simple usage
+    '@nuxtjs/vuetify',
+
+    // With options
+    ['@nuxtjs/vuetify', { /* module options */ }]
+    // 追加終了
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
