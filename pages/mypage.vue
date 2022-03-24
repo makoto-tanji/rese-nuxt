@@ -18,11 +18,11 @@
                 </tr>
                 <tr>
                   <td>Date</td>
-                  <td>{{ reservation.pivot.reservation_date }}</td>
+                  <td>{{ getReservationDate(reservation) }}</td>
                 </tr>
                 <tr>
                   <td>Time</td>
-                  <td>{{ reservation.pivot.reservation_date }}</td>
+                  <td>{{ getReservationTime(reservation) }}</td>
                 </tr>
                 <tr>
                   <td>Number</td>
@@ -52,6 +52,14 @@ export default {
         'http://127.0.0.1:8000/api/auth/user'
       );
       this.userData = userData.data;
+    },
+    // 日にち(半角スペース)時間で保存されている予約時間から日にちを取り出す関数
+    getReservationDate(reservationData){
+      return reservationData.pivot.reservation_date.split(' ')[0];
+    },
+    // 日にち(半角スペース)時間で保存されている予約時間から時間を取り出す関数
+    getReservationTime(reservationData){
+      return reservationData.pivot.reservation_date.split(' ')[1];
     }
   }, // end methods
   created() {

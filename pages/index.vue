@@ -3,7 +3,13 @@
     <div class="header-container">
       <HeaderComponent />
       <div class="search-container">
-        <p>検索form</p>
+        <form action="">
+          <input type="text" placeholder="All area" />
+          <span class="partition"></span>
+          <input type="text" placeholder="All genre" />
+          <span class="partition"></span>
+          <input type="text" placeholder="Search ..." />
+        </form>
       </div>
     </div>
     <div class="main-container">
@@ -64,6 +70,26 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
+form{
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px #808080;
+}
+input{
+  width: 200px;
+  display: block;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+.partition{
+  height: 20px;
+  background-color: #505050;
+  border: 1px solid #505050;
+  margin: auto 0px;
+}
 .main-container{
   flex-wrap: wrap;
   justify-content: space-between;
@@ -74,7 +100,7 @@ export default {
   border-radius: 20px;
   background-color: #fff;
   margin-bottom: 50px;
-  box-shadow: 5px 5px 3px #000;
+  box-shadow: 5px 5px 3px #505050;
 }
 .content-img{
   width:100%;

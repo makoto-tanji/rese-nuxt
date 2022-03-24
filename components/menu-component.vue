@@ -31,7 +31,7 @@
       </ul>
       <ul v-if="$auth.loggedIn">
         <li><NuxtLink to="/">Home</NuxtLink></li>
-        <li><NuxtLink to="/logout">logout</NuxtLink></li>
+        <li><p @click=logout>Logout</p></li>
         <li><NuxtLink to="/mypage">Mypage</NuxtLink></li>
       </ul>
     </div>
@@ -47,11 +47,19 @@ export default {
     }
   }, // end data
   methods: {
-    openMenu(){
+    openMenu() {
       this.menuIsOpened = true;
     },
-    closeMenu(){
+    closeMenu() {
       this.menuIsOpened = false;
+    },
+    async logout() {
+      try {
+        await this.$auth.logout();
+        this.$router.push("/login");
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 }
@@ -111,6 +119,13 @@ export default {
   justify-content: center;
   background: #fff;
   position: absolute;
+}
+a{
+  color: rgb(53, 96, 246);
+}
+li > p{
+  color: rgb(53, 96, 246);
+  cursor: pointer;
 }
 .menuIsOpened{
   background-color: red;
