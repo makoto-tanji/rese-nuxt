@@ -1,5 +1,5 @@
 <template>
-  <div class="body-container">
+  <v-app>
     <div class="header-container">
       <HeaderComponent />
       <div class="search-container">
@@ -8,55 +8,48 @@
           <span class="partition"></span>
           <input type="text" placeholder="All genre" />
           <span class="partition"></span>
+          <v-icon>{{iconMagnify}}</v-icon>
           <input type="text" placeholder="Search ..." />
         </form>
       </div>
     </div>
     <div class="main-container">
       <div
-        v-for="item in shopLists"
-        :key="item.id"
+        v-for="shop in shopLists"
+        :key="shop.id"
         class="shop-card"
       >
-        <div class="content-img">
-          <img :src="item.img_url" alt="" class="card-img">
-        </div>
-        <div class="content-info">
-          <h2 class="shop-name">{{ item.name }}</h2>
-          <div class="content-tags">
-            <p class="tags">#{{ item.area.area_name}}</p>
-            <div
-              v-for="category in item.category_shop"
-              :key="category.id"
-              class="category-container"
-            >
-              <p class="tags">#{{ category.category_name }}</p>
-            </div>
-          </div>
-        </div>
-        <div class="content-btn">
-          <NuxtLink :to="`/detail/${item.id}`">詳しくみる</NuxtLink>
-        </div>
+        <ShopCard :parentData=shop />
       </div>
-    </div> <!-- end v-for -->
-  </div>
+    </div>
+  </v-app>
 </template>
 
 <script>
+import { mdiMagnify } from '@mdi/js';
+import { mdiHeart } from '@mdi/js';
+import { mdiHeartOutline } from '@mdi/js';
+
 export default {
   data() {
     return {
       shopLists: "",
       categoryLists: "",
+      // MDI
+      iconMagnify: mdiMagnify,
+      iconHeart: mdiHeart,
+      iconHeartOutline: mdiHeartOutline,
     }
   }, // end data
   methods: {
+    // ページ読み込み時に呼ばれる
+    // ショップデータを取得する関数
     async getShops() {
       const resData = await this.$axios.get(
         'http://127.0.0.1:8000/api/shop'
       );
       this.shopLists = resData.data.data;
-    }
+    },
   }, // end methods
   created() {
     this.getShops();
@@ -65,6 +58,10 @@ export default {
 </script>
 
 <style scoped>
+.theme--light.v-application {
+    background: rgb(238, 238, 238);
+    /* color: rgba(0, 0, 0, 0.87); */
+}
 .header-container{
   display: flex;
   justify-content: space-between;
@@ -81,7 +78,7 @@ input{
   width: 200px;
   display: block;
   padding: 10px;
-  border: none;
+  /* border: none; */
   border-radius: 5px;
 }
 .partition{
@@ -96,40 +93,10 @@ input{
 }
 .shop-card{
   width: 350px;
-  height: 350px;
+  /* height: 350px; */
   border-radius: 20px;
   background-color: #fff;
   margin-bottom: 50px;
   box-shadow: 5px 5px 3px #505050;
-}
-.content-img{
-  width:100%;
-  height: 50%;
-  /* position: relative; */
-}
-.card-img{
-  width:100%;
-  height: 100%;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  /* position: absolute; */
-
-}
-.content-info{
-  padding: 20px 20px 0px 20px;
-}
-.shop-name{
-  font-size: 20px;
-}
-.content-btn{
-  margin: 20px;
-}
-.btn{
-  width: 100px;
-  padding: 10px;
-  text-align: center;
-  text-decoration: none;
-  color: #fff;
-  border-radius: 5px;
 }
 </style>

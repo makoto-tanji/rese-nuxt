@@ -56,6 +56,8 @@ export default {
     async logout() {
       try {
         await this.$auth.logout();
+        // Vuex内のデータ破棄
+        this.$store.commit('deleteFavoriteShop');
         this.$router.push("/login");
       } catch (error) {
         console.log(error);
@@ -77,6 +79,7 @@ export default {
   box-shadow: 3px 3px 3px #505050;
   position: relative;
   cursor: pointer;
+  z-index: 4;
 }
 .menu-line{
   display: inline-block;
@@ -114,17 +117,26 @@ export default {
   transform: rotate(-45deg);
 }
 .menu-content{
-  width: 80vw;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   background: #fff;
   position: absolute;
+  top:-80px;
+  left: -80px;
+  z-index: 3;
 }
-a{
-  color: rgb(53, 96, 246);
+ul{
+  margin-top: 150px;
 }
-li > p{
+li{
+  margin: 20px;
+}
+li > *{
   color: rgb(53, 96, 246);
+  font-size: 26px;
+  font-weight: bold;
   cursor: pointer;
 }
 .menuIsOpened{

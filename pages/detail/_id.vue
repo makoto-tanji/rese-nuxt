@@ -1,5 +1,5 @@
 <template>
-  <div class="body-container">
+  <v-app>
     <div class="main-container">
       <div class="info-container">
         <HeaderComponent />
@@ -33,24 +33,23 @@
               class="date-input"
               required
             />
-            <select v-model="reservationTime" required>
-              <option
-                v-for="time in reservationTimeOption"
-                :key="time.id"
-                :value="time.value"
-              >
-                {{ time.value }}
-              </option>
-            </select>
-            <select v-model="reservationPeopleNumber" required>
-              <option
-                v-for="people in reservationPeopleNumberOption"
-                :key="people.id"
-                :value="people.number"
-              >
-                {{ people.number }}人
-              </option>
-            </select>
+            <v-select
+              :items="reservationTimeOption"
+              v-model="reservationTime"
+              outlined
+              dense
+              background-color="white"
+              placeholder="10:00"
+            ></v-select>
+            <v-select
+              :items="reservationPeopleNumberOption"
+              v-model="reservationPeopleNumber"
+              outlined
+              dense
+              suffix="人"
+              background-color="white"
+              placeholder="1人"
+            ></v-select>
             <div class="confirmation-container">
               <table>
                 <tr>
@@ -82,7 +81,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -100,36 +99,36 @@ export default {
 
       // 予約時間プルダウン用
       reservationTimeOption: [
-        {id: 1, value: "10:00"},
-        {id: 2, value: "10:30"},
-        {id: 3, value: "11:00"},
-        {id: 4, value: "11:30"},
-        {id: 5, value: "12:00"},
-        {id: 6, value: "12:30"},
-        {id: 7, value: "13:00"},
-        {id: 8, value: "13:30"},
-        {id: 9, value: "14:00"},
-        {id: 10, value: "14:30"},
-        {id: 11, value: "15:00"},
-        {id: 12, value: "15:30"},
-        {id: 13, value: "16:00"},
-        {id: 14, value: "17:30"},
-        {id: 15, value: "18:00"},
-        {id: 16, value: "18:30"},
-        {id: 17, value: "19:00"},
-        {id: 18, value: "19:30"},
-        {id: 19, value: "20:00"},
-        {id: 20, value: "20:30"},
-        {id: 21, value: "21:00"}
+        "10:00",
+        "10:30",
+        "11:00",
+        "11:30",
+        "12:00",
+        "12:30",
+        "13:00",
+        "13:30",
+        "14:00",
+        "14:30",
+        "15:00",
+        "15:30",
+        "16:00",
+        "17:30",
+        "18:00",
+        "18:30",
+        "19:00",
+        "19:30",
+        "20:00",
+        "20:30",
+        "21:00"
       ],
       // 予約人数プルダウン用
       reservationPeopleNumberOption: [
-        {id: 1, number: 1},
-        {id: 2, number: 2},
-        {id: 3, number: 3},
-        {id: 4, number: 4},
-        {id: 5, number: 5},
-        {id: 6, number: 6}
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
       ]
     }
   }, // end data
@@ -148,7 +147,7 @@ export default {
         number_of_people: this.reservationPeopleNumber,
         reservation_date: this.reservationDate + ' ' + this.reservationTime,
       };
-      await this.$axios.post("http://127.0.0.1:8000/api/reservation", sendData);
+      await this.$axios.post("http://127.0.0.1:8000/api/auth/reservation", sendData);
       this.$router.push("/done");
     }
   }, // end methods
@@ -203,6 +202,8 @@ img{
 }
 .date-input{
   width: 40%;
+  background-color: #fff;
+  border-radius: 5px;
 }
 .confirmation-container{
   background-color: rgb(85, 128, 247);
@@ -230,5 +231,8 @@ td{
 }
 .form-container{
   background-color: #fff;
+}
+.v-input{
+  flex: none;
 }
 </style>

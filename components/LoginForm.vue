@@ -32,6 +32,7 @@ export default {
     return {
       email: null,
       password: null,
+      favoriteList: [],
       // MDI
       iconEmail: mdiEmail,
       iconLock: mdiLock
@@ -46,6 +47,19 @@ export default {
             password: this.password,
           },
         });
+
+        // お気に入り店をVuexで保存
+        const userData = await this.$axios.get(
+          'http://127.0.0.1:8000/api/auth/user'
+        );
+        this.favoriteList = userData.data.favorites;
+        for(let i=0; i<this.favoriteList.length; i++){
+          this.$store.commit('updateFavoriteShop', {
+            index: this.favoriteList[i].id,
+            boolean: true
+          });
+        }
+
         this.$router.push("/");
       } catch {
         alert("メールアドレスまたはパスワードが間違っております");

@@ -37,3 +37,6 @@ button, input, select, textarea {
 .tags{
     padding-right: 5px;
 }
+.heart{
+    color: red;
+}

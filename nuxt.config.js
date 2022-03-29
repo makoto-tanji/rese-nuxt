@@ -30,6 +30,9 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    // 以下追加
+    { src: '~/plugins/localStorage.js', ssr: false }
+    // 追加終了
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

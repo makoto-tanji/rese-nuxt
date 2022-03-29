@@ -1,5 +1,5 @@
 <template>
-  <div class="body-container">
+  <v-app>
     <HeaderComponent />
     <div class="main-container">
       <p v-if="$auth.loggedIn" class="user-name">{{ $auth.user.name }}さん</p>
@@ -11,39 +11,66 @@
             :key="reservation.id"
             class="reservation-content main-bg-color"
           >
-            <table>
-                <tr>
-                  <td>shop</td>
-                  <td>{{ reservation.name }}</td>
-                </tr>
-                <tr>
-                  <td>Date</td>
-                  <td>{{ getReservationDate(reservation) }}</td>
-                </tr>
-                <tr>
-                  <td>Time</td>
-                  <td>{{ getReservationTime(reservation) }}</td>
-                </tr>
-                <tr>
-                  <td>Number</td>
-                  <td>{{ reservation.pivot.number_of_people }}人</td>
-                </tr>
-              </table>
+          <div class="icons-container">
+            <v-icon color="white" class="mr-10">{{ iconClock }}</v-icon>
+            <p>deleteに渡すid確認{{ reservation.pivot.id }}</p>
+            <v-icon
+            @click="deleteReservation(reservation.pivot.id)"
+            color="white"
+            class="ml-auto mr-0"
+            >
+              {{ iconCloseCircleOutline }}
+            </v-icon>
+          </div>
+          <table>
+            <tr>
+              <td>shop</td>
+              <td>{{ reservation.name }}</td>
+            </tr>
+            <tr>
+              <td>Date</td>
+              <td>{{ getReservationDate(reservation) }}</td>
+            </tr>
+            <tr>
+              <td>Time</td>
+              <td>{{ getReservationTime(reservation) }}</td>
+            </tr>
+            <tr>
+              <td>Number</td>
+              <td>{{ reservation.pivot.number_of_people }}人</td>
+            </tr>
+          </table>
           </div>
         </div>
         <div class="favorite-container">
           <p class="ttl">お気に入り店舗</p>
+          <div class="">
+            <div
+              v-for="shop in userData.favorites"
+              :key="shop.id"
+              class="shop-card"
+            >
+              <ShopCard :parentData=shop />
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script>
+import { mdiClock } from '@mdi/js';
+import { mdiCloseCircleOutline } from '@mdi/js';
+
 export default {
   data() {
     return {
       userData: '',
+      testList: [],
+      // MDI
+      iconClock: mdiClock,
+      iconCloseCircleOutline: mdiCloseCircleOutline
     };
   }, // end data
   methods: {
@@ -60,6 +87,10 @@ export default {
     // 日にち(半角スペース)時間で保存されている予約時間から時間を取り出す関数
     getReservationTime(reservationData){
       return reservationData.pivot.reservation_date.split(' ')[1];
+    },
+    async deleteReservation(id){
+      await this.$axios.delete('http://127.0.0.1:8000/api/auth/reservation/' + id);
+      this.getUser();
     }
   }, // end methods
   created() {
@@ -69,6 +100,14 @@ export default {
 </script>
 
 <style scoped>
+/* vuetify */
+.theme--light.v-application {
+    background: rgb(238, 238, 238);
+    /* color: rgba(0, 0, 0, 0.87); */
+}
+.v-application p {
+    margin-bottom: 0px;
+}
 .main-container{
   flex-direction: column;
   align-items: center;
@@ -97,12 +136,24 @@ export default {
   box-shadow: 3px 3px 3px #505050;
   margin-top: 20px;
 }
+.icons-container{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
 td{
   width: 100px;
   padding: 5px 0px;
 }
 .favorite-container{
   width: 40%;
-  background-color: red;
+}
+.shop-card{
+  width: 300px;
+  /* height: 350px; */
+  border-radius: 20px;
+  background-color: #fff;
+  margin-bottom: 50px;
+  box-shadow: 5px 5px 3px #505050;
 }
 </style>
