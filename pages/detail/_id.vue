@@ -7,7 +7,7 @@
           <h2 class="shop-name">{{ shopData.name}}</h2>
         </div>
         <div class="content-img">
-          <img :src="shopData.img_url" alt="" class="img">
+          <img :src="shopData.img_url" alt="" class="img" />
         </div>
         <div class="content-tags">
           <p class="tags">#{{ areaName }}</p>
@@ -40,7 +40,7 @@
               dense
               background-color="white"
               placeholder="10:00"
-            ></v-select>
+            />
             <v-select
               :items="reservationPeopleNumberOption"
               v-model="reservationPeopleNumber"
@@ -49,7 +49,7 @@
               suffix="人"
               background-color="white"
               placeholder="1人"
-            ></v-select>
+            />
             <div class="confirmation-container">
               <table>
                 <tr>

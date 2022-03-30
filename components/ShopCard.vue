@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <img :src="parentData.img_url" alt="" class="card-img">
+    <img :src="parentData.img_url" alt="" class="card-img" />
     <div class="info-container">
       <h2 class="shop-name">{{ parentData.name }}</h2>
       <div class="tags-container">

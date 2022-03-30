@@ -7,7 +7,7 @@
         v-model="email"
         placeholder="Email"
         required
-      >
+      />
     </div>
     <div class="input-container">
       <v-icon>{{ iconLock }}</v-icon>
@@ -16,7 +16,7 @@
         v-model="password"
         placeholder="Password"
         required
-      >
+      />
     </div>
     <button class="btn main-bg-color">ログイン</button>
   </form>

@@ -5,9 +5,9 @@
       <div class="search-container">
         <form action="">
           <input type="text" placeholder="All area" />
-          <span class="partition"></span>
+          <span class="partition" />
           <input type="text" placeholder="All genre" />
-          <span class="partition"></span>
+          <span class="partition" />
           <v-icon>{{iconMagnify}}</v-icon>
           <input type="text" placeholder="Search ..." />
         </form>

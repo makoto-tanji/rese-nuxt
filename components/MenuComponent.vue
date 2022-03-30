@@ -5,18 +5,18 @@
     @click="closeMenu"
     class="btn main-bg-color"
   >
-    <span class="menu-line opened-menu-line-top"></span>
-    <span class="menu-line opened-menu-line-middle"></span>
-    <span class="menu-line opened-menu-line-bottom"></span>
+    <span class="menu-line opened-menu-line-top" />
+    <span class="menu-line opened-menu-line-middle" />
+    <span class="menu-line opened-menu-line-bottom" />
   </button>
   <button
     v-else
     @click="openMenu"
     class="btn main-bg-color"
   >
-    <span class="menu-line closed-menu-line-top"></span>
-    <span class="menu-line closed-menu-line-middle"></span>
-    <span class="menu-line closed-menu-line-bottom"></span>
+    <span class="menu-line closed-menu-line-top" />
+    <span class="menu-line closed-menu-line-middle" />
+    <span class="menu-line closed-menu-line-bottom" />
   </button>
   <transition>
     <div
