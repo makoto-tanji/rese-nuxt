@@ -50,7 +50,7 @@ export default {
 
         // お気に入り店をVuexで保存
         const userData = await this.$axios.get(
-          'http://127.0.0.1:8000/api/auth/user'
+          `${this.$axios.defaults.baseURL}auth/user`
         );
         this.favoriteList = userData.data.favorites;
         for(let i=0; i<this.favoriteList.length; i++){

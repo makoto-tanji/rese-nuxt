@@ -52,7 +52,7 @@ export default {
   methods:{
     async register() {
       try {
-        await this.$axios.post("http://localhost:8000/api/auth/register", {
+        await this.$axios.post(`${this.$axios.defaults.baseURL}auth/register`, {
           name: this.name,
           email: this.email,
           password: this.password,

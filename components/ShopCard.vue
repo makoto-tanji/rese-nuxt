@@ -60,7 +60,7 @@ export default {
           shop_id: shopId,
           user_id: this.$auth.user.id
         };
-        await this.$axios.post("http://localhost:8000/api/auth/favorite", sendFavoriteData);
+        await this.$axios.post(`${this.$axios.defaults.baseURL}auth/favorite`, sendFavoriteData);
 
         this.$store.commit('updateFavoriteShop', {
           index: shopId,
@@ -75,7 +75,7 @@ export default {
         shopId: shopId,
         userId: this.$auth.user.id
       };
-      await this.$axios.post("http://localhost:8000/api/auth/favorite/destroy", deleteFavoriteData);
+      await this.$axios.post(`${this.$axios.defaults.baseURL}auth/favorite/destroy`, deleteFavoriteData);
       this.$store.commit('updateFavoriteShop', {
         index: shopId,
         boolean: false

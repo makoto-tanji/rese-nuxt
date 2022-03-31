@@ -76,7 +76,7 @@ export default {
   methods: {
     async getUser(){
       const userData = await this.$axios.get(
-        'http://127.0.0.1:8000/api/auth/user'
+        `${this.$axios.defaults.baseURL}auth/user`
       );
       this.userData = userData.data;
     },
@@ -89,7 +89,7 @@ export default {
       return reservationData.pivot.reservation_date.split(' ')[1];
     },
     async deleteReservation(id){
-      await this.$axios.delete('http://127.0.0.1:8000/api/auth/reservation/' + id);
+      await this.$axios.delete(`${this.$axios.defaults.baseURL}auth/reservation/` + id);
       this.getUser();
     }
   }, // end methods

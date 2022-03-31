@@ -135,7 +135,7 @@ export default {
   methods: {
     async getShop() {
       const resData = await this.$axios.get(
-        'http://127.0.0.1:8000/api/shop/' + this.$route.params.id
+        `${this.$axios.defaults.baseURL}shop/` + this.$route.params.id
       );
       this.shopData = resData.data.data[0];
       this.areaName = resData.data.data[0].area.area_name;
@@ -147,7 +147,7 @@ export default {
         number_of_people: this.reservationPeopleNumber,
         reservation_date: this.reservationDate + ' ' + this.reservationTime,
       };
-      await this.$axios.post("http://127.0.0.1:8000/api/auth/reservation", sendData);
+      await this.$axios.post(`${this.$axios.defaults.baseURL}auth/reservation`, sendData);
       this.$router.push("/done");
     }
   }, // end methods

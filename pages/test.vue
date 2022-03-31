@@ -12,8 +12,10 @@
       </div>
     </v-main>
     <button @click="test">test</button>
-    <p>{{testList}}</p>
     <p>{{ $store.state.favoriteShopList }}</p>
+    <h1>baseURL</h1>
+    <p>API_URL {{ testURL }}</p>
+    <p>axios baseURL {{ axiosBaseURL }}</p>
     <v-container fluid>
     <v-row align="center">
       <v-col
@@ -72,15 +74,13 @@
     data() {
       return {
         items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
-        testList:[],
+        testURL: process.env.apiURL,
+        axiosBaseURL : this.$axios.defaults.baseURL
       };
     },
     methods: {
       test() {
-        this.testList[0]=1;
-        for(let i=0; i<20; i=i+2){
-          this.testList[i]=i;
-        }
+        console.log(process.env.apiURL);
       },
     }
   }
