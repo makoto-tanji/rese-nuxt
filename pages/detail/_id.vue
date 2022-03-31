@@ -26,7 +26,7 @@
       <div class="reservation-container main-bg-color">
         <p class="ttl">予約</p>
         <div v-if="$auth.loggedIn" class="reservation-content">
-          <form @submit.prevent="reserve" class="reservation-form">
+          <v-form @submit.prevent="reserve" class="reservation-form">
             <input
               type="date"
               v-model="reservationDate"
@@ -34,21 +34,25 @@
               required
             />
             <v-select
-              :items="reservationTimeOption"
               v-model="reservationTime"
+              :items="reservationTimeOption"
+              :rules="[v => !!v || 'Item is required']"
+              placeholder="10:00"
               outlined
+              required
               dense
               background-color="white"
-              placeholder="10:00"
             />
             <v-select
-              :items="reservationPeopleNumberOption"
               v-model="reservationPeopleNumber"
+              :items="reservationPeopleNumberOption"
+              :rules="[v => !!v || 'Item is required']"
+              placeholder="1人"
               outlined
+              required
               dense
               suffix="人"
               background-color="white"
-              placeholder="1人"
             />
             <div class="confirmation-container">
               <table>
@@ -71,7 +75,7 @@
               </table>
             </div>
             <button class="reservation-btn">予約する</button>
-          </form>
+          </v-form>
         </div>
         <div v-if="!$auth.loggedIn" class="recommending-container">
           <p>初めての方・会員登録されていない方</p>
@@ -101,6 +105,7 @@ export default {
       reservationTimeOption: this.$reservationTimeOption,
       // 予約人数プルダウン用
       reservationPeopleNumberOption: this.$reservationPeopleNumberOption
+      // バリデーションルール
     }
   }, // end data
   methods: {
@@ -112,14 +117,18 @@ export default {
       this.areaName = resData.data.data[0].area.area_name;
     },
     async reserve() {
-      const sendData = {
-        shop_id: this.shopData.id,
-        user_id: this.$auth.user.id,
-        number_of_people: this.reservationPeopleNumber,
-        reservation_date: this.reservationDate + ' ' + this.reservationTime,
-      };
-      await this.$axios.post(`${this.$axios.defaults.baseURL}auth/reservation`, sendData);
-      this.$router.push("/done");
+      try {
+        const sendData = {
+          shop_id: this.shopData.id,
+          user_id: this.$auth.user.id,
+          number_of_people: this.reservationPeopleNumber,
+          reservation_date: this.reservationDate + ' ' + this.reservationTime,
+        };
+        await this.$axios.post(`${this.$axios.defaults.baseURL}auth/reservation`, sendData);
+        this.$router.push("/done");
+      } catch {
+        alert("入力に誤りがあります")
+      }
     }
   }, // end methods
   created() {
@@ -205,5 +214,8 @@ td{
 }
 .v-input{
   flex: none;
+}
+.theme--light.v-application {
+    background: rgb(238, 238, 238);
 }
 </style>

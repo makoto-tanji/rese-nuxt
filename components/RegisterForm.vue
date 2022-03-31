@@ -1,34 +1,44 @@
 <template>
-  <form @submit.prevent="register" class="form-container">
+  <v-form
+    @submit.prevent="register"
+    class="form-container"
+  >
     <div class="input-container">
-      <v-icon>{{ iconAccount }}</v-icon>
-      <input
-        type="text"
+      <v-text-field
         v-model="name"
+        :rules="nameRules"
+        label="Username"
         placeholder="Username"
         required
+        dense
+        prepend-icon="mdi-account"
       />
     </div>
     <div class="input-container">
-      <v-icon>{{ iconEmail }}</v-icon>
-      <input
-        type="email"
+      <v-text-field
         v-model="email"
+        :rules="emailRules"
+        label="Email"
         placeholder="Email"
         required
+        dense
+        prepend-icon="mdi-email"
       />
     </div>
     <div class="input-container">
-      <v-icon>{{ iconLock }}</v-icon>
-      <input
-        type="password"
+      <v-text-field
         v-model="password"
+        :rules="passwordRules"
+        label="Password"
         placeholder="Password"
         required
+        dense
+        type="password"
+        prepend-icon="mdi-lock"
       />
     </div>
     <button class="btn main-bg-color">登録</button>
-  </form>
+  </v-form>
 </template>
 
 <script>
@@ -43,6 +53,17 @@ export default {
       name: null,
       email: null,
       password: null,
+      // v-form
+      nameRules: [
+        v => !!v || 'Name is required',
+      ],
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid',
+      ],
+      passwordRules: [
+        v => !!v || 'Password is required',
+      ],
       // MDI
       iconAccount: mdiAccount,
       iconEmail: mdiEmail,

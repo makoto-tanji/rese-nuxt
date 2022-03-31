@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <!-- appプロパティが必要です -->
-    <v-app-bar app>ba-</v-app-bar>
+    <v-app-bar app>Header</v-app-bar>
 
     <v-main>
       <v-container>
@@ -10,64 +10,67 @@
       <div class="purple darken-2 text-center">
         <span class="white--text">Lorem ipsum</span>
       </div>
+      <v-form v-model="valid">
+        <v-container>
+          <v-row>
+            <v-col
+              cols="12"
+              md="4"
+            >
+              <v-text-field
+                v-model="name"
+                :rules="nameRules"
+                label="Username"
+                placeholder="Username"
+                required
+              ></v-text-field>
+            </v-col>
+
+            <v-col
+              cols="12"
+              md="4"
+            >
+              <v-text-field
+                v-model="email"
+                :rules="emailRules"
+                label="Email"
+                placeholder="Email"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col
+              cols="12"
+              md="4"
+            >
+              <v-text-field
+                v-model="password"
+                :rules="passwordRules"
+                label="Password"
+                placeholder="Password"
+                required
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-btn
+            :disabled="!valid"
+            color="success"
+            class="mr-4"
+            @click="validate"
+          >
+            登録
+          </v-btn>
+        </v-container>
+      </v-form>
+      <v-form>
+        <v-text-field
+          v-model="name"
+          :rules="nameRules"
+          label="Username"
+          placeholder="Username"
+          required
+        />
+      </v-form>
     </v-main>
-    <button @click="test">test</button>
-    <p>{{ $store.state.favoriteShopList }}</p>
-    <h1>baseURL</h1>
-    <p>API_URL {{ testURL }}</p>
-    <p>axios baseURL {{ axiosBaseURL }}</p>
-    <h1>グローバル変数</h1>
-    <p>{{rto}}</p>
-    <v-container fluid>
-    <v-row align="center">
-      <v-col
-        class="d-flex"
-        cols="12"
-        sm="6"
-      >
-        <v-select
-          :items="items"
-          label="Standard"
-        ></v-select>
-      </v-col>
-
-      <v-col
-        class="d-flex"
-        cols="12"
-        sm="6"
-      >
-        <v-select
-          :items="items"
-          filled
-          label="Filled style"
-        ></v-select>
-      </v-col>
-
-      <v-col
-        class="d-flex"
-        cols="12"
-        sm="6"
-      >
-        <v-select
-          :items="items"
-          label="Outlined style"
-          outlined
-        ></v-select>
-      </v-col>
-
-      <v-col
-        class="d-flex"
-        cols="12"
-        sm="6"
-      >
-        <v-select
-          :items="items"
-          label="Solo field"
-          solo
-        ></v-select>
-      </v-col>
-    </v-row>
-  </v-container>
   </v-app>
 </template>
 
@@ -75,17 +78,32 @@
   export default {
     data() {
       return {
-        items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
-        testURL: process.env.apiURL,
-        axiosBaseURL : this.$axios.defaults.baseURL,
-        rto: this.$reservationTimeOption
+        valid: true,
+        name: '',
+        nameRules: [
+          v => !!v || 'Name is required',
+        ],
+        email: '',
+        emailRules: [
+          v => !!v || 'E-mail is required',
+          v => /.+@.+/.test(v) || 'E-mail must be valid',
+        ],
+        password: '',
+        passwordRules: [
+          v => !!v || 'Password is required',
+        ],
       };
     },
     methods: {
-      test() {
+      testLog() {
         console.log(process.env.apiURL);
         console.log(this.$reservationTimeOption);
+      },
+      validate () {
+        // this.$refs.form.validate()
+        console.log(process.env.apiURL);
       },
     }
   }
 </script>
+

@@ -1,5 +1,5 @@
 <template>
-  <div class="body-container">
+  <v-app>
     <HeaderComponent />
     <div class="main-container">
       <div class="card">
@@ -7,7 +7,7 @@
         <LoginForm />
       </div>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <style scoped>
@@ -25,9 +25,7 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
-.form-container{
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
+.theme--light.v-application {
+    background: rgb(238, 238, 238);
 }
 </style>

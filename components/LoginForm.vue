@@ -1,25 +1,33 @@
 <template>
-  <form @submit.prevent="login" class="form-container">
+  <v-form
+    @submit.prevent="login"
+    class="form-container"
+  >
     <div class="input-container">
-      <v-icon>{{ iconEmail }}</v-icon>
-      <input
-        type="email"
+      <v-text-field
         v-model="email"
+        :rules="emailRules"
+        label="Email"
         placeholder="Email"
         required
+        dense
+        prepend-icon="mdi-email"
       />
     </div>
     <div class="input-container">
-      <v-icon>{{ iconLock }}</v-icon>
-      <input
-        type="password"
+      <v-text-field
         v-model="password"
+        :rules="passwordRules"
+        label="Password"
         placeholder="Password"
         required
+        dense
+        type="password"
+        prepend-icon="mdi-lock"
       />
     </div>
     <button class="btn main-bg-color">ログイン</button>
-  </form>
+  </v-form>
 </template>
 
 <script>
@@ -33,6 +41,14 @@ export default {
       email: null,
       password: null,
       favoriteList: [],
+      // v-form
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid',
+      ],
+      passwordRules: [
+        v => !!v || 'Password is required',
+      ],
       // MDI
       iconEmail: mdiEmail,
       iconLock: mdiLock
