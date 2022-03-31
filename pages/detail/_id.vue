@@ -98,38 +98,9 @@ export default {
       reservationPeopleNumber: "",
 
       // 予約時間プルダウン用
-      reservationTimeOption: [
-        "10:00",
-        "10:30",
-        "11:00",
-        "11:30",
-        "12:00",
-        "12:30",
-        "13:00",
-        "13:30",
-        "14:00",
-        "14:30",
-        "15:00",
-        "15:30",
-        "16:00",
-        "17:30",
-        "18:00",
-        "18:30",
-        "19:00",
-        "19:30",
-        "20:00",
-        "20:30",
-        "21:00"
-      ],
+      reservationTimeOption: this.$reservationTimeOption,
       // 予約人数プルダウン用
-      reservationPeopleNumberOption: [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-      ]
+      reservationPeopleNumberOption: this.$reservationPeopleNumberOption
     }
   }, // end data
   methods: {

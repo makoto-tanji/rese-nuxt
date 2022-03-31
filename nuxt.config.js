@@ -31,7 +31,8 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     // 以下追加
-    { src: '~/plugins/localStorage.js', ssr: false }
+    { src: '~/plugins/localStorage.js', ssr: false }, //vuex-persistedstate
+    { src: '~/plugins/constants.js'}  // グローバル変数
     // 追加終了
   ],
 

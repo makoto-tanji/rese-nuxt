@@ -16,6 +16,8 @@
     <h1>baseURL</h1>
     <p>API_URL {{ testURL }}</p>
     <p>axios baseURL {{ axiosBaseURL }}</p>
+    <h1>グローバル変数</h1>
+    <p>{{rto}}</p>
     <v-container fluid>
     <v-row align="center">
       <v-col
@@ -75,12 +77,14 @@
       return {
         items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
         testURL: process.env.apiURL,
-        axiosBaseURL : this.$axios.defaults.baseURL
+        axiosBaseURL : this.$axios.defaults.baseURL,
+        rto: this.$reservationTimeOption
       };
     },
     methods: {
       test() {
         console.log(process.env.apiURL);
+        console.log(this.$reservationTimeOption);
       },
     }
   }
