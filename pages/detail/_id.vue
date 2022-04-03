@@ -36,7 +36,7 @@
             <v-select
               v-model="reservationTime"
               :items="reservationTimeOption"
-              :rules="[v => !!v || 'Item is required']"
+              :rules="[v => !!v || '日時を選択してください']"
               placeholder="10:00"
               outlined
               required
@@ -46,7 +46,7 @@
             <v-select
               v-model="reservationPeopleNumber"
               :items="reservationPeopleNumberOption"
-              :rules="[v => !!v || 'Item is required']"
+              :rules="[v => !!v || '人数を選択してください']"
               placeholder="1人"
               outlined
               required
@@ -98,17 +98,26 @@ export default {
 
       // 予約データ送信用
       reservationDate: "",
-      reservationTime: "",
+      reservationTime: "10:00",
       reservationPeopleNumber: "",
 
       // 予約時間プルダウン用
       reservationTimeOption: this.$reservationTimeOption,
       // 予約人数プルダウン用
-      reservationPeopleNumberOption: this.$reservationPeopleNumberOption
+      reservationPeopleNumberOption: this.$reservationPeopleNumberOption,
       // バリデーションルール
     }
   }, // end data
   methods: {
+    // 本日の日付を取得する関数
+    getCurrentDate() {
+      const currentDate = new Date();
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth() + 1;
+      const date = currentDate.getDate();
+      this.reservationDate = year + "-" + month + "-" + date;
+    },
+    // 店舗情報を取得する関数
     async getShop() {
       const resData = await this.$axios.get(
         `${this.$axios.defaults.baseURL}shop/` + this.$route.params.id
@@ -116,6 +125,18 @@ export default {
       this.shopData = resData.data.data[0];
       this.areaName = resData.data.data[0].area.area_name;
     },
+    // エラーメッセージを追加する関数
+    pushMessage(message, error) {
+      if(error){
+        if(message){
+          message = message + "\n" +error;
+        }else{
+          message = error;
+        }
+      }return message;
+
+    },
+    // 予約情報をDBに保存する関数
     async reserve() {
       try {
         const sendData = {
@@ -126,13 +147,21 @@ export default {
         };
         await this.$axios.post(`${this.$axios.defaults.baseURL}auth/reservation`, sendData);
         this.$router.push("/done");
-      } catch {
-        alert("入力に誤りがあります")
+      } catch(error) {
+        let errorMessage;
+        const peopleError = error.response.data.error.number_of_people;
+        const dateError = error.response.data.error.reservation_date;
+        errorMessage = this.pushMessage(errorMessage, peopleError);
+        errorMessage = this.pushMessage(errorMessage, dateError);
+        alert(errorMessage);
+        // 以下エラー内容確認用
+        // console.log(error.response);
       }
-    }
+    },
   }, // end methods
   created() {
     this.getShop();
+    this.getCurrentDate();
   }
 }
 </script>
@@ -184,6 +213,9 @@ img{
   width: 40%;
   background-color: #fff;
   border-radius: 5px;
+}
+.error-text{
+  color: rgb(0, 0, 0);
 }
 .confirmation-container{
   background-color: rgb(85, 128, 247);

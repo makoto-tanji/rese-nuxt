@@ -43,11 +43,11 @@ export default {
       favoriteList: [],
       // v-form
       emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+/.test(v) || 'E-mail must be valid',
+        v => !!v || 'メールアドレスを入力してください',
+        v => /.+@.+/.test(v) || 'メール形式で入力してください',
       ],
       passwordRules: [
-        v => !!v || 'Password is required',
+        v => !!v || 'パスワードを入力してください',
       ],
       // MDI
       iconEmail: mdiEmail,
