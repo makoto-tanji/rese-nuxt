@@ -31,8 +31,28 @@ const  reservationPeopleNumberOption = [
   5,
   6
 ]
+// TODO
+// データベースから取得したい
+// ページ内検索エリア用
+const areaSearchOption = [
+  "全て",
+  "東京都",
+  "大阪府",
+  "福岡県"
+]
+// ページ内検索ジャンル用
+const categorySearchOption = [
+  "全て",
+  "寿司",
+  "焼肉",
+  "居酒屋",
+  "イタリアン",
+  "ラーメン"
+]
 
 export default (context, inject) => {
   inject('reservationTimeOption', reservationTimeOption)
   inject('reservationPeopleNumberOption', reservationPeopleNumberOption)
+  inject('areaSearchOption', areaSearchOption)
+  inject('categorySearchOption', categorySearchOption)
 }

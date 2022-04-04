@@ -41,7 +41,9 @@ import { mdiHeart } from '@mdi/js';
 import { mdiHeartOutline } from '@mdi/js';
 
 export default {
-  props:["parentData"],
+  props:[
+    "parentData",
+  ],
   data() {
     return {
       // MDI

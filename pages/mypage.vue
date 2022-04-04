@@ -7,13 +7,13 @@
         <div class="reservation-container">
           <p class="ttl">予約状況</p>
           <div
-            v-for="reservation in userData.reservations"
+            v-for="(reservation, index) in userData.reservations"
             :key="reservation.id"
             class="reservation-content main-bg-color"
           >
           <div class="icons-container">
             <v-icon color="white" class="mr-10">{{ iconClock }}</v-icon>
-            <p>deleteに渡すid確認{{ reservation.pivot.id }}</p>
+            <p>予約{{ index + 1 }}</p>
             <v-icon
             @click="deleteReservation(reservation.pivot.id)"
             color="white"
