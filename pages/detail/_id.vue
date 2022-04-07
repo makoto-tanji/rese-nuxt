@@ -95,6 +95,7 @@ export default {
       // 表示用
       shopData: "",
       areaName: "",
+      errorMessage: "",
 
       // 予約データ送信用
       reservationDate: "",
@@ -148,12 +149,9 @@ export default {
         await this.$axios.post(`${this.$axios.defaults.baseURL}auth/reservation`, sendData);
         this.$router.push("/done");
       } catch(error) {
-        let errorMessage;
         const peopleError = error.response.data.error.number_of_people;
         const dateError = error.response.data.error.reservation_date;
-        errorMessage = this.pushMessage(errorMessage, peopleError);
-        errorMessage = this.pushMessage(errorMessage, dateError);
-        alert(errorMessage);
+        alert((peopleError || '') + (peopleError && "\n") + (dateError || ''));
         // 以下エラー内容確認用
         // console.log(error.response);
       }

@@ -66,57 +66,31 @@ export default {
         `${this.$axios.defaults.baseURL}shop`
       );
       this.shopLists = resData.data.data;
-    },
-    // ページ内検索時にcomputedから呼ばれる
-    // エリア検索と一致する or 未入力　なら true
-    searchArea(elem) {
-      if( this.areaSearchWord === "全て" || this.areaSearchWord === "") {
-        return true;
-      } else if(elem.area.area_name === this.areaSearchWord) {
-        return true;
-      }
-      return false;
-    },
-    // ページ内検索時にcomputedから呼ばれる
-    // カテゴリー検索と一致する or 未入力 なら true
-    searchCategory(elem){
-      if( this.categorySearchWord === "全て" || this.categorySearchWord === "") {
-        return true;
-      } else {
-        let categoryIsMatch = false;
-        // カテゴリーは複数ある可能性がある為forEachで全件確認
-        elem.category_shop.forEach( (element) => {
-          if(element.category_name === this.categorySearchWord){
-            categoryIsMatch = true;
-          }
-        });
-        return categoryIsMatch;
-      }
-    },
-    // ページ内検索時にcomputedから呼ばれる
-    // 店名検索が店名に含まれる　or 未入力なら true
-    searchName(elem){
-      if(this.nameSearchWord === "") {
-        return true;
-      } else {
-        return (elem.name.indexOf(this.nameSearchWord) > -1) ? true : false;
-      }
     }
   }, // end methods
   created() {
     this.getShops();
   },
   computed:{
+
     // ページ内検索でマッチした店舗だけを配列searchListsに格納
     searchLists(){
-      // getShop前に処理しようとして、
-      // this.shopLists.filter is not a function　となるのを防ぐためのif文
-      if(this.shopLists !== null){
-        return this.shopLists.filter(this.searchArea)
-          .filter(this.searchCategory)
-          .filter(this.searchName);
-      }
-      return this.shopLists;
+      // オプショナルチェーン ?.
+      // ?.の左側が参照されnullかundefinedならundefinedが返される
+      return this.shopLists?.filter(function(elem){
+        return this === "全て"
+          || this === ""
+          || elem.area.area_name === this;
+          }, this.areaSearchWord)
+      ?.filter(function(elem){
+        return this === "全て"
+          || this === ""
+          || elem.category_shop.find(element => element.category_name === this);
+          }, this.categorySearchWord)
+      ?.filter(function(elem){
+        return this === "" || elem.name.indexOf(this) > -1;
+        }, this.nameSearchWord)
+      || [];
     }
   },
 }
