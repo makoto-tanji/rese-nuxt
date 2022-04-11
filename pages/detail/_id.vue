@@ -167,6 +167,7 @@ export default {
 <style scoped>
 .main-container{
   width: 100%;
+  flex-direction: row;
   justify-content: space-between;
 }
 .search-container{
@@ -188,6 +189,7 @@ img{
 }
 .reservation-container{
   width: 45%;
+  height: 840px;
   border-radius: 10px;
 }
 .ttl{
@@ -247,5 +249,16 @@ td{
 }
 .theme--light.v-application {
     background: rgb(238, 238, 238);
+}
+
+
+@media screen and (max-width: 768px) {
+  .main-container{
+    flex-direction: column;
+  }
+  .info-container,
+  .reservation-container{
+    width: 100%;
+  }
 }
 </style>

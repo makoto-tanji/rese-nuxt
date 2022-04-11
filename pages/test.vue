@@ -10,66 +10,35 @@
       <div class="purple darken-2 text-center">
         <span class="white--text">Lorem ipsum</span>
       </div>
-      <v-form v-model="valid">
-        <v-container>
-          <v-row>
-            <v-col
-              cols="12"
-              md="4"
-            >
-              <v-text-field
-                v-model="name"
-                :rules="nameRules"
-                label="Username"
-                placeholder="Username"
-                required
-              ></v-text-field>
-            </v-col>
+      <div class="test">
 
-            <v-col
-              cols="12"
-              md="4"
-            >
-              <v-text-field
-                v-model="email"
-                :rules="emailRules"
-                label="Email"
-                placeholder="Email"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col
-              cols="12"
-              md="4"
-            >
-              <v-text-field
-                v-model="password"
-                :rules="passwordRules"
-                label="Password"
-                placeholder="Password"
-                required
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <v-btn
-            :disabled="!valid"
-            color="success"
-            class="mr-4"
-            @click="validate"
-          >
-            登録
-          </v-btn>
-        </v-container>
-      </v-form>
-      <v-form>
-        <v-text-field
-          v-model="name"
-          :rules="nameRules"
-          label="Username"
-          placeholder="Username"
-          required
-        />
-      </v-form>
+    <div class="header-container">
+      <HeaderComponent />
+      <div class="search-container">
+        <form action="">
+          <v-select
+            v-model="areaSearchWord"
+            :items="areaSearchOption"
+            placeholder="All area"
+          />
+          <span class="partition" />
+          <v-select
+            v-model="categorySearchWord"
+            :items="categorySearchOption"
+            placeholder="All category"
+          />
+          <span class="partition" />
+          <v-icon>{{iconMagnify}}</v-icon>
+          <input
+            type="text"
+            v-model="nameSearchWord"
+            placeholder="Search ..."
+          />
+        </form>
+      </div>
+    </div>
+
+      </div>
     </v-main>
   </v-app>
 </template>
@@ -107,3 +76,30 @@
   }
 </script>
 
+<style scoped>
+.header-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+form{
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px #808080;
+}
+input{
+  width: 200px;
+  display: block;
+  /* padding: 10px; */
+  /* border: none; */
+  border-radius: 5px;
+}
+.partition{
+  height: 20px;
+  background-color: #505050;
+  border: 1px solid #505050;
+  margin: auto 5px;
+}
+</style>

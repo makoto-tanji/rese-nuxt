@@ -131,6 +131,7 @@ export default {
   margin: 40px 0px;
 }
 .reservation-content{
+  width: 100%;
   padding: 40px;
   border-radius: 10px;
   box-shadow: 3px 3px 3px #505050;
@@ -149,11 +150,17 @@ td{
   width: 40%;
 }
 .shop-card{
-  width: 300px;
-  /* height: 350px; */
-  border-radius: 20px;
-  background-color: #fff;
-  margin-bottom: 50px;
-  box-shadow: 5px 5px 3px #505050;
+  width: 350px;
+  margin-bottom: 30px;
+}
+
+@media screen and (max-width: 768px) {
+  .main-content{
+    flex-direction: column;
+  }
+  .reservation-container,
+  .favorite-container{
+    width: 100%;
+  }
 }
 </style>

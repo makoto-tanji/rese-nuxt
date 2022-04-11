@@ -76,6 +76,9 @@ export default {
           });
         }
 
+        // ログイン状態更新
+        this.$store.commit('updateLoggedIn', true);
+
         this.$router.push("/");
       } catch {
         alert("メールアドレスまたはパスワードが間違っております");

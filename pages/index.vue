@@ -16,8 +16,8 @@
             placeholder="All category"
           />
           <span class="partition" />
-          <v-icon>{{iconMagnify}}</v-icon>
-          <input
+          <v-icon class="icon">{{iconMagnify}}</v-icon>
+          <v-text-field
             type="text"
             v-model="nameSearchWord"
             placeholder="Search ..."
@@ -26,21 +26,24 @@
       </div>
     </div>
     <div class="main-container">
-      <div
-        v-for="shop in searchLists"
-        :key="shop.id"
-        class="shop-card"
-      >
-        <ShopCard :parentData=shop />
-      </div>
+      <v-row >
+        <v-col
+          v-for="shop in searchLists"
+          :key="shop.id"
+          cols=12
+          sm=6
+          md=3
+          class="shop-card"
+        >
+          <ShopCard :parentData=shop />
+        </v-col>
+      </v-row>
     </div>
   </v-app>
 </template>
 
 <script>
 import { mdiMagnify } from '@mdi/js';
-import { mdiHeart } from '@mdi/js';
-import { mdiHeartOutline } from '@mdi/js';
 
 export default {
   data() {
@@ -54,8 +57,6 @@ export default {
       categorySearchOption: this.$categorySearchOption,
       // MDI
       iconMagnify: mdiMagnify,
-      iconHeart: mdiHeart,
-      iconHeartOutline: mdiHeartOutline,
     }
   }, // end data
   methods: {
@@ -113,13 +114,6 @@ form{
   border-radius: 5px;
   box-shadow: 3px 3px 3px #808080;
 }
-input{
-  width: 200px;
-  display: block;
-  /* padding: 10px; */
-  /* border: none; */
-  border-radius: 5px;
-}
 .partition{
   height: 20px;
   background-color: #505050;
@@ -128,14 +122,25 @@ input{
 }
 .main-container{
   flex-wrap: wrap;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 .shop-card{
   width: 350px;
-  /* height: 350px; */
-  border-radius: 20px;
-  background-color: #fff;
-  margin-bottom: 50px;
-  box-shadow: 5px 5px 3px #505050;
+}
+
+@media screen and (max-width: 768px) {
+  .header-container{
+    display: block;
+  }
+  form {
+    flex-direction: column;
+    margin-bottom: 40px;
+  }
+  .partition{
+    display: none;
+  }
+  .icon{
+    display: none;
+  }
 }
 </style>

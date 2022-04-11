@@ -1,38 +1,45 @@
 <template>
   <v-main>
-    <img :src="parentData.img_url" alt="" class="card-img" />
-    <div class="info-container">
-      <h2 class="shop-name">{{ parentData.name }}</h2>
-      <div class="tags-container">
-        <p class="tags">#{{ parentData.area_id }}</p>
-        <div
-          v-for="category in parentData.category_shop"
-          :key="category.id"
-          class="category-container"
-        >
-          <p class="tags">#{{ category.category_name }}</p>
+    <v-card
+      max-width="350"
+      elevation="5"
+    >
+      <img :src="parentData.img_url" alt="" class="card-img" />
+      <v-card-title>{{ parentData.name }}</v-card-title>
+      <v-card-text>
+        <div class="tags-container">
+          <p class="tags">#{{ parentData.area.area_name }}</p>
+          <div
+            v-for="category in parentData.category_shop"
+            :key="category.id"
+            class="category-container"
+          >
+            <p class="tags">#{{ category.category_name }}</p>
+          </div>
         </div>
+      </v-card-text>
+      <div class="btn-container">
+        <NuxtLink :to="`/detail/${parentData.id}`">詳しくみる</NuxtLink>
+        <v-icon
+          v-show="$store.state.favoriteShopList[parentData.id]"
+          @click="removeFavorite(parentData.id)"
+          color="red"
+          class="heart"
+          title="いいね解除"
+        >
+          {{ iconHeart }}
+        </v-icon>
+        <v-icon
+          v-show="!$store.state.favoriteShopList[parentData.id]"
+          @click="addFavorite(parentData.id)"
+          title="いいね"
+        >
+          {{ iconHeartOutline }}
+        </v-icon>
       </div>
-    </div>
-    <div class="btn-container">
-      <NuxtLink :to="`/detail/${parentData.id}`">詳しくみる</NuxtLink>
-      <v-icon
-        v-show="$store.state.favoriteShopList[parentData.id]"
-        @click="removeFavorite(parentData.id)"
-        color="red"
-        class="heart"
-        title="いいね解除"
-      >
-        {{ iconHeart }}
-      </v-icon>
-      <v-icon
-        v-show="!$store.state.favoriteShopList[parentData.id]"
-        @click="addFavorite(parentData.id)"
-        title="いいね"
-      >
-        {{ iconHeartOutline }}
-      </v-icon>
-    </div>
+    </v-card>
+
+
   </v-main>
 </template>
 
@@ -88,14 +95,6 @@ export default {
 </script>
 
 <style scoped>
-v-main{
-  width: 350px;
-  height: 350px;
-  border-radius: 20px;
-  background-color: #fff;
-  margin-bottom: 50px;
-  box-shadow: 5px 5px 3px #505050;
-}
 .card-img{
   width: 100%;
   border-top-left-radius: 20px;

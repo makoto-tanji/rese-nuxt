@@ -32,7 +32,8 @@ export default {
   plugins: [
     // 以下追加
     { src: '~/plugins/localStorage.js', ssr: false }, //vuex-persistedstate
-    { src: '~/plugins/constants.js'}  // グローバル変数
+    { src: '~/plugins/constants.js' },  // グローバル変数
+    { src: '~/plugins/vuetify.js'}
     // 追加終了
   ],
 
