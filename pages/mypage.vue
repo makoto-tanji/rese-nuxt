@@ -1,5 +1,8 @@
 <template>
   <v-app>
+    <transition>
+      <LoadingCircle v-if="isLoading" />
+    </transition>
     <HeaderComponent />
     <div class="main-container">
       <p v-if="$auth.loggedIn" class="user-name">{{ $auth.user.name }}さん</p>
@@ -70,7 +73,9 @@ export default {
       testList: [],
       // MDI
       iconClock: mdiClock,
-      iconCloseCircleOutline: mdiCloseCircleOutline
+      iconCloseCircleOutline: mdiCloseCircleOutline,
+      // ロード完了
+      isLoading: true,
     };
   }, // end data
   methods: {
@@ -95,6 +100,14 @@ export default {
   }, // end methods
   created() {
     this.getUser();
+  },
+  mounted() {
+    // ページの読み込みが完了したら0.5秒後にロード円を非表示
+    this.$nextTick(() => {
+      setTimeout(() => {
+        this.isLoading = false
+      }, 500)
+    })
   }
 }
 </script>

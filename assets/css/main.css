@@ -1,7 +1,7 @@
 body {
     /* width: 100%; */
     height: 100%;
-    background-color: rgb(238, 238, 238);
+    background-color: rgb(238, 238, 238); /* #eeeeee */
     margin: 30px 70px;
     font-size: 18px;
     font-family: "Arial",  "MS Pゴシック", sans-serif;
@@ -18,11 +18,11 @@ button, input, select, textarea {
 }
 
 .main-color {
-    color: rgb(53, 96, 246);
+    color: rgb(53, 96, 246); /* #3560f6 */
 }
 .main-bg-color {
     color: #fff;
-    background-color: rgb(53, 96, 246);
+    background-color: rgb(53, 96, 246); /* #3560f6 */
 }
 .main-container {
     display: flex;
@@ -39,4 +39,19 @@ button, input, select, textarea {
 }
 .heart{
     color: red;
+}
+/* 変化をなめらかにする */
+.v-enter,
+.v-leave-to {
+    opacity: 0;
+}
+
+.v-enter-to,
+.v-leave {
+    opacity: 1;
+}
+
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.3s;
 }

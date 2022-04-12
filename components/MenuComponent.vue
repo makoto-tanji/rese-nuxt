@@ -1,42 +1,42 @@
 <template>
-<div class="menu-container">
-  <button
-    v-if="menuIsOpened"
-    @click="closeMenu"
-    class="btn main-bg-color"
-  >
-    <span class="menu-line opened-menu-line-top" />
-    <span class="menu-line opened-menu-line-middle" />
-    <span class="menu-line opened-menu-line-bottom" />
-  </button>
-  <button
-    v-else
-    @click="openMenu"
-    class="btn main-bg-color"
-  >
-    <span class="menu-line closed-menu-line-top" />
-    <span class="menu-line closed-menu-line-middle" />
-    <span class="menu-line closed-menu-line-bottom" />
-  </button>
-  <transition>
-    <div
-      @click.self="closeMenu"
-      v-show="menuIsOpened == true"
-      class="menu-content"
+  <div class="menu-container">
+    <button
+      v-if="menuIsOpened"
+      @click="closeMenu"
+      class="btn main-bg-color"
     >
-      <ul v-if="!$store.state.isLoggedIn">
-        <li><NuxtLink to="/">Home</NuxtLink></li>
-        <li><NuxtLink to="/register">Registration</NuxtLink></li>
-        <li><NuxtLink to="/login">Login</NuxtLink></li>
-      </ul>
-      <ul v-if="$store.state.isLoggedIn">
-        <li><NuxtLink to="/">Home</NuxtLink></li>
-        <li><p @click=logout>Logout</p></li>
-        <li><NuxtLink to="/mypage">Mypage</NuxtLink></li>
-      </ul>
-    </div>
-  </transition>
-</div>
+      <span class="menu-line opened-menu-line-top" />
+      <span class="menu-line opened-menu-line-middle" />
+      <span class="menu-line opened-menu-line-bottom" />
+    </button>
+    <button
+      v-else
+      @click="openMenu"
+      class="btn main-bg-color"
+    >
+      <span class="menu-line closed-menu-line-top" />
+      <span class="menu-line closed-menu-line-middle" />
+      <span class="menu-line closed-menu-line-bottom" />
+    </button>
+    <transition>
+      <div
+        @click.self="closeMenu"
+        v-show="menuIsOpened == true"
+        class="menu-content"
+      >
+        <ul v-if="!$store.state.isLoggedIn">
+          <li><NuxtLink to="/">Home</NuxtLink></li>
+          <li><NuxtLink to="/register">Registration</NuxtLink></li>
+          <li><NuxtLink to="/login">Login</NuxtLink></li>
+        </ul>
+        <ul v-if="$store.state.isLoggedIn">
+          <li><NuxtLink to="/">Home</NuxtLink></li>
+          <li><p @click=logout>Logout</p></li>
+          <li><NuxtLink to="/mypage">Mypage</NuxtLink></li>
+        </ul>
+      </div>
+    </transition>
+  </div>
 </template>
 
 <script>

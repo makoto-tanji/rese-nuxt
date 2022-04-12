@@ -14,6 +14,9 @@
 
     <div class="header-container">
       <HeaderComponent />
+      <HeaderComponent
+        v-if="test"
+      />
       <div class="search-container">
         <form action="">
           <v-select
@@ -38,6 +41,12 @@
       </div>
     </div>
 
+      <transition>
+      <LoadingCircle
+        v-if="test"
+      />
+      </transition>
+
       </div>
     </v-main>
   </v-app>
@@ -47,6 +56,7 @@
   export default {
     data() {
       return {
+        test: true,
         valid: true,
         name: '',
         nameRules: [
@@ -72,7 +82,14 @@
         // this.$refs.form.validate()
         console.log(process.env.apiURL);
       },
-    }
+    },
+    mounted() {
+      this.$nextTick(() => {
+        setTimeout(() => {
+          this.test = false
+        }, 800)
+      })
+    },
   }
 </script>
 
@@ -101,5 +118,19 @@ input{
   background-color: #505050;
   border: 1px solid #505050;
   margin: auto 5px;
+}
+.loading-circle{
+  position: absolute;
+}
+
+/* 変化をなめらかにする */
+.v-enter, .v-leave-to{
+  opacity: 0;
+}
+.v-enter-to, .v-leave{
+  opacity: 1;
+}
+.v-enter-active, .v-leave-active{
+  transition: opacity 0.5s;
 }
 </style>

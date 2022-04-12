@@ -1,5 +1,8 @@
 <template>
   <v-app>
+    <transition>
+      <LoadingCircle v-if="isLoading" />
+    </transition>
     <div class="header-container">
       <HeaderComponent />
       <div class="search-container">
@@ -57,6 +60,8 @@ export default {
       categorySearchOption: this.$categorySearchOption,
       // MDI
       iconMagnify: mdiMagnify,
+      // ロード完了
+      isLoading: true,
     }
   }, // end data
   methods: {
@@ -73,7 +78,6 @@ export default {
     this.getShops();
   },
   computed:{
-
     // ページ内検索でマッチした店舗だけを配列searchListsに格納
     searchLists(){
       // オプショナルチェーン ?.
@@ -93,7 +97,15 @@ export default {
         }, this.nameSearchWord)
       || [];
     }
-  },
+  }, // end computed
+  mounted() {
+    // ページの読み込みが完了したら0.5秒後にロード円を非表示
+    this.$nextTick(() => {
+      setTimeout(() => {
+        this.isLoading = false
+      }, 500)
+    })
+  }
 }
 </script>
 
@@ -122,7 +134,6 @@ form{
 }
 .main-container{
   flex-wrap: wrap;
-  /* justify-content: space-between; */
 }
 .shop-card{
   width: 350px;

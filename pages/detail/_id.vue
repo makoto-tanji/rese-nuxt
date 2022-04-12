@@ -1,5 +1,8 @@
 <template>
   <v-app>
+    <transition>
+      <LoadingCircle v-if="isLoading" />
+    </transition>
     <div class="main-container">
       <div class="info-container">
         <HeaderComponent />
@@ -102,11 +105,13 @@ export default {
       reservationTime: "10:00",
       reservationPeopleNumber: "",
 
+      // ロード完了
+      isLoading: true,
+
       // 予約時間プルダウン用
       reservationTimeOption: this.$reservationTimeOption,
       // 予約人数プルダウン用
       reservationPeopleNumberOption: this.$reservationPeopleNumberOption,
-      // バリデーションルール
     }
   }, // end data
   methods: {
@@ -152,14 +157,20 @@ export default {
         const peopleError = error.response.data.error.number_of_people;
         const dateError = error.response.data.error.reservation_date;
         alert((peopleError || '') + (peopleError && "\n") + (dateError || ''));
-        // 以下エラー内容確認用
-        // console.log(error.response);
       }
     },
   }, // end methods
   created() {
     this.getShop();
     this.getCurrentDate();
+  },
+  mounted() {
+    // ページの読み込みが完了したら0.5秒後にロード円を非表示
+    this.$nextTick(() => {
+      setTimeout(() => {
+        this.isLoading = false
+      }, 500)
+    })
   }
 }
 </script>
