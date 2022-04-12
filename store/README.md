@@ -1,10 +1,17 @@
-# STORE
+#　概要
 
-**This directory is not required, you can delete it if you don't want to use it.**
+Rese（リーズ）
 
-This directory contains your Vuex Store files.
-Vuex Store option is implemented in the Nuxt.js framework.
+飲食店予約サービス
 
-Creating a file in this directory automatically activates the option in the framework.
+#　バージョン
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/guide/vuex-store).
+Laravel Framework 9.4.1
+
+PHP 8.1.2
+
+MySQL Ver 15.1 Distrib 10.4.22-MariaDB
+
+Nuxt.js nuxt@2.15.8
+
+Vue.js vue@2.6.14

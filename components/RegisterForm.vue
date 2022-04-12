@@ -13,13 +13,6 @@
         dense
         prepend-icon="mdi-account"
       />
-      <div
-        v-for="error in errorMessages.name"
-        :key="error"
-        class="error-container"
-      >
-        <p class="error-text">{{ error }}</p>
-      </div>
     </div>
     <div class="input-container">
       <v-text-field
@@ -31,13 +24,6 @@
         dense
         prepend-icon="mdi-email"
       />
-      <div
-        v-for="error in errorMessages.email"
-        :key="error"
-        class="error-container"
-      >
-        <p class="error-text">{{ error }}</p>
-      </div>
     </div>
     <div class="input-container">
       <v-text-field
@@ -50,13 +36,6 @@
         type="password"
         prepend-icon="mdi-lock"
       />
-      <div
-        v-for="error in errorMessages.password"
-        :key="error"
-        class="error-container"
-      >
-        <p class="error-text">{{ error }}</p>
-      </div>
     </div>
     <button class="btn main-bg-color">登録</button>
   </v-form>
@@ -71,7 +50,6 @@ export default {
       name: null,
       email: null,
       password: null,
-      errorMessages: "",
       // v-form
       nameRules: [
         v => !!v || 'お名前を入力してください',
@@ -95,10 +73,12 @@ export default {
         });
         this.$router.push("/thanks");
       } catch(error) {
-        this.errorMessages = error.response.data.error;
-        // 以下エラー内容確認用
-        // console.log(error.response);
-        // console.log(JSON.stringify(error));
+        alert((error.response.data.error.name || '')
+          + (error.response.data.error.name && '\n')
+          + (error.response.data.error.email || '')
+          + (error.response.data.error.email && '\n')
+          + (error.response.data.error.password || '')
+        );
       }
     },
   } // end methods
@@ -119,9 +99,6 @@ input{
   line-height: 20px;
   border: none;
   border-bottom: 1px solid #000;
-}
-.error-text{
-  color: red;
 }
 .btn{
   padding: 10px 15px;

@@ -131,17 +131,6 @@ export default {
       this.shopData = resData.data.data[0];
       this.areaName = resData.data.data[0].area.area_name;
     },
-    // エラーメッセージを追加する関数
-    pushMessage(message, error) {
-      if(error){
-        if(message){
-          message = message + "\n" +error;
-        }else{
-          message = error;
-        }
-      }return message;
-
-    },
     // 予約情報をDBに保存する関数
     async reserve() {
       try {
@@ -156,7 +145,10 @@ export default {
       } catch(error) {
         const peopleError = error.response.data.error.number_of_people;
         const dateError = error.response.data.error.reservation_date;
-        alert((peopleError || '') + (peopleError && "\n") + (dateError || ''));
+        alert((peopleError || '')
+          + (peopleError && "\n")
+          + (dateError || '')
+        );
       }
     },
   }, // end methods
