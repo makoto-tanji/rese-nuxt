@@ -38,8 +38,6 @@
         </v-icon>
       </div>
     </v-card>
-
-
   </v-main>
 </template>
 
@@ -58,6 +56,7 @@ export default {
       iconHeartOutline: mdiHeartOutline,
     }
   }, // end data
+
   methods: {
     // ハート枠をクリックした時に呼ばれる
     // お気に入りに追加する関数

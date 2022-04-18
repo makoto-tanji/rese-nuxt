@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="main-container">
-      <v-row >
+      <v-row>
         <v-col
           v-for="shop in searchLists"
           :key="shop.id"
@@ -64,9 +64,9 @@ export default {
       isLoading: true,
     }
   }, // end data
+
   methods: {
-    // ページ読み込み時に呼ばれる
-    // ショップデータを取得する関数
+    // ページ読み込み時に呼ばれる。ショップデータを取得する関数
     async getShops() {
       const resData = await this.$axios.get(
         `${this.$axios.defaults.baseURL}shop`
@@ -74,30 +74,31 @@ export default {
       this.shopLists = resData.data.data;
     }
   }, // end methods
+
   created() {
     this.getShops();
   },
+
   computed:{
     // ページ内検索でマッチした店舗だけを配列searchListsに格納
     searchLists(){
       // オプショナルチェーン ?.
       // ?.の左側が参照されnullかundefinedならundefinedが返される
-      return this.shopLists?.filter(function(elem){
-        return this === "全て"
-          || this === ""
-          || elem.area.area_name === this;
-          }, this.areaSearchWord)
-      ?.filter(function(elem){
-        return this === "全て"
-          || this === ""
-          || elem.category_shop.find(element => element.category_name === this);
-          }, this.categorySearchWord)
-      ?.filter(function(elem){
-        return this === "" || elem.name.indexOf(this) > -1;
-        }, this.nameSearchWord)
-      || [];
+      return this.shopLists?.filter((elem) => {
+        return this.areaSearchWord === "全て"
+          || this.areaSearchWord === ""
+          || elem.area.area_name === this.areaSearchWord;
+      })?.filter((elem) => {
+        return this.categorySearchWord === "全て"
+          || this.categorySearchWord === ""
+          || elem.category_shop.find(element => element.category_name === this.categorySearchWord);
+      })?.filter((elem) => {
+        return this.nameSearchWord === ""
+          || elem.name.indexOf(this.nameSearchWord) > -1;
+      }) || [];
     }
   }, // end computed
+
   mounted() {
     // ページの読み込みが完了したら0.5秒後にロード円を非表示
     this.$nextTick(() => {
@@ -111,8 +112,7 @@ export default {
 
 <style scoped>
 .theme--light.v-application {
-    background: rgb(238, 238, 238);
-    /* color: rgba(0, 0, 0, 0.87); */
+  background: rgb(238, 238, 238);
 }
 .header-container{
   display: flex;

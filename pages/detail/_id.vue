@@ -7,6 +7,7 @@
       <div class="info-container">
         <HeaderComponent />
         <div class="content-name">
+          <v-icon @click="$router.back()" class="icon chevron-left">{{ chevronLeft }}</v-icon>
           <h2 class="shop-name">{{ shopData.name}}</h2>
         </div>
         <div class="content-img">
@@ -15,12 +16,12 @@
         <div class="content-tags">
           <p class="tags">#{{ areaName }}</p>
           <div
-              v-for="category in shopData.category_shop"
-              :key="category.id"
-              class="category-container"
-            >
-              <p class="tags">#{{ category.category_name }}</p>
-            </div>
+            v-for="category in shopData.category_shop"
+            :key="category.id"
+            class="category-container"
+          >
+            <p class="tags">#{{ category.category_name }}</p>
+          </div>
         </div>
         <div class="content-overview">
           <p>{{ shopData.overview }}</p>
@@ -92,6 +93,8 @@
 </template>
 
 <script>
+import { mdiChevronLeft } from '@mdi/js';
+
 export default {
   data() {
     return {
@@ -99,21 +102,21 @@ export default {
       shopData: "",
       areaName: "",
       errorMessage: "",
-
       // 予約データ送信用
       reservationDate: "",
       reservationTime: "10:00",
       reservationPeopleNumber: "",
-
       // ロード完了
       isLoading: true,
-
       // 予約時間プルダウン用
       reservationTimeOption: this.$reservationTimeOption,
       // 予約人数プルダウン用
       reservationPeopleNumberOption: this.$reservationPeopleNumberOption,
+      // MDI
+      chevronLeft: mdiChevronLeft,
     }
   }, // end data
+
   methods: {
     // 本日の日付を取得する関数
     getCurrentDate() {
@@ -152,10 +155,12 @@ export default {
       }
     },
   }, // end methods
+
   created() {
     this.getShop();
     this.getCurrentDate();
   },
+
   mounted() {
     // ページの読み込みが完了したら0.5秒後にロード円を非表示
     this.$nextTick(() => {
@@ -179,9 +184,20 @@ export default {
 .info-container{
   width: 45%;
 }
+.content-name{
+  display: flex;
+  align-items: center;
+  padding-bottom: 20px;
+}
+.chevron-left{
+  padding: 5px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px #808080;
+}
 .shop-name{
   font-size: 30px;
-  padding-bottom: 20px;
+  margin-left: 20px;
 }
 img{
   width: 100%;
@@ -251,9 +267,8 @@ td{
   flex: none;
 }
 .theme--light.v-application {
-    background: rgb(238, 238, 238);
+  background: rgb(238, 238, 238);
 }
-
 
 @media screen and (max-width: 768px) {
   .main-container{

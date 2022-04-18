@@ -46,6 +46,7 @@ export default {
       menuIsOpened: false
     }
   }, // end data
+
   methods: {
     openMenu() {
       this.menuIsOpened = true;

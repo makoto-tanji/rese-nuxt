@@ -42,7 +42,6 @@
 </template>
 
 <script>
-
 export default {
   auth: false,
   data() {
@@ -63,6 +62,7 @@ export default {
       ],
     };
   }, // end data
+
   methods:{
     async register() {
       try {

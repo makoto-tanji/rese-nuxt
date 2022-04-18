@@ -26,6 +26,6 @@
   border-top-right-radius: 10px;
 }
 .theme--light.v-application {
-    background: rgb(238, 238, 238);
+  background: rgb(238, 238, 238);
 }
 </style>

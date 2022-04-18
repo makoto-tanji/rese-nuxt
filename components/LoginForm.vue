@@ -31,9 +31,6 @@
 </template>
 
 <script>
-import { mdiEmail } from '@mdi/js'
-import { mdiLock } from '@mdi/js'
-
 export default {
   auth: false,
   data() {
@@ -49,11 +46,9 @@ export default {
       passwordRules: [
         v => !!v || 'パスワードを入力してください',
       ],
-      // MDI
-      iconEmail: mdiEmail,
-      iconLock: mdiLock
     };
   }, // end data
+
   methods:{
     async login() {
       try {
