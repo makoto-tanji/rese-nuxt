@@ -40,11 +40,17 @@ export default {
       favoriteList: [],
       // v-form
       emailRules: [
-        v => !!v || 'メールアドレスを入力してください',
-        v => /.+@.+/.test(v) || 'メール形式で入力してください',
+        (v) => {
+          return (v) ? true : 'メールアドレスを入力してください';
+        },
+        (v) => {
+          return ( /[\w\-._]+@[\w\-._]+\.[A-Za-z]+/.test(v) )? true : 'メールアドレス形式で入力してください'
+        },
       ],
       passwordRules: [
-        v => !!v || 'パスワードを入力してください',
+        (v) => {
+          return (v) ? true : 'パスワードを入力してください';
+        }
       ],
     };
   }, // end data
@@ -70,9 +76,6 @@ export default {
             boolean: true
           });
         }
-
-        // ログイン状態更新
-        this.$store.commit('updateLoggedIn', true);
 
         this.$router.push("/");
       } catch {

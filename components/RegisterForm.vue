@@ -51,14 +51,23 @@ export default {
       password: null,
       // v-form
       nameRules: [
-        v => !!v || 'お名前を入力してください',
+        // v => !!v || 'お名前を入力してください',
+        (v) => {
+          return (v) ? true : 'お名前を入力してください';
+        }
       ],
       emailRules: [
-        v => !!v || 'メールアドレスを入力してください',
-        v => /.+@.+/.test(v) || 'メール形式で入力してください',
+        (v) => {
+          return (v) ? true : 'メールアドレスを入力してください';
+        },
+        (v) => {
+          return ( /[\w\-._]+@[\w\-._]+\.[A-Za-z]+/.test(v) )? true : 'メールアドレス形式で入力してください'
+        },
       ],
       passwordRules: [
-        v => !!v || 'パスワードを入力してください',
+        (v) => {
+          return (v) ? true : 'パスワードを入力してください';
+        }
       ],
     };
   }, // end data
@@ -73,11 +82,15 @@ export default {
         });
         this.$router.push("/thanks");
       } catch(error) {
-        alert((error.response.data.error.name || '')
-          + (error.response.data.error.name && '\n')
-          + (error.response.data.error.email || '')
-          + (error.response.data.error.email && '\n')
-          + (error.response.data.error.password || '')
+        // alert((error.response.data.error.name || '')
+        //   + (error.response.data.error.name && '\n')
+        //   + (error.response.data.error.email || '')
+        //   + (error.response.data.error.email && '\n')
+        //   + (error.response.data.error.password || '')
+        // );
+        alert( ((error.response.data.error.name)? error.response.data.error.name + '\n' : '')
+          + ((error.response.data.error.email)? error.response.data.error.email + '\n' : '')
+          + ((error.response.data.error.password)? error.response.data.error.password + '\n' : '')
         );
       }
     },

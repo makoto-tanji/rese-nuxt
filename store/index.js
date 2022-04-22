@@ -2,8 +2,6 @@ import Vue from "vue";
 
 export const state = () => ({
   favoriteShopList: [],
-  // $auth.loggedInの状態をリアクティブに扱いたいため
-  isLoggedIn: false,
 });
 
 export const mutations = {
@@ -16,9 +14,4 @@ export const mutations = {
   deleteFavoriteShop(state) {
     state.favoriteShopList = [];
   },
-  // ログイン状態を更新
-  updateLoggedIn(state, boolean) {
-    state.isLoggedIn = boolean;
-  }
-
 }

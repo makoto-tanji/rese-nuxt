@@ -29,7 +29,7 @@
       </div>
       <div class="reservation-container main-bg-color">
         <p class="ttl">予約</p>
-        <div v-if="$auth.loggedIn" class="reservation-content">
+        <div v-if="$store.state.auth.loggedIn" class="reservation-content">
           <v-form @submit.prevent="reserve" class="reservation-form">
             <input
               type="date"
@@ -40,7 +40,7 @@
             <v-select
               v-model="reservationTime"
               :items="reservationTimeOption"
-              :rules="[v => !!v || '日時を選択してください']"
+              :rules="timeRules"
               placeholder="10:00"
               outlined
               required
@@ -50,7 +50,7 @@
             <v-select
               v-model="reservationPeopleNumber"
               :items="reservationPeopleNumberOption"
-              :rules="[v => !!v || '人数を選択してください']"
+              :rules="peopleNumberRules"
               placeholder="1人"
               outlined
               required
@@ -81,7 +81,7 @@
             <button class="reservation-btn">予約する</button>
           </v-form>
         </div>
-        <div v-if="!$auth.loggedIn" class="recommending-container">
+        <div v-else class="recommending-container">
           <p>初めての方・会員登録されていない方</p>
           <RegisterForm />
           <p>すでに会員登録がお済みの方</p>
@@ -112,6 +112,17 @@ export default {
       reservationTimeOption: this.$reservationTimeOption,
       // 予約人数プルダウン用
       reservationPeopleNumberOption: this.$reservationPeopleNumberOption,
+      // v-form用
+      timeRules: [
+        (v) => {
+          return (v) ? true : '時間を入力してください';
+        }
+      ],
+      peopleNumberRules: [
+        (v) => {
+          return (v) ? true : '人数を入力してください';
+        }
+      ],
       // MDI
       chevronLeft: mdiChevronLeft,
     }

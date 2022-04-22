@@ -5,7 +5,7 @@
     </transition>
     <HeaderComponent />
     <div class="main-container">
-      <p v-if="$auth.loggedIn" class="user-name">{{ $auth.user.name }}さん</p>
+      <p v-if="$store.state.auth.loggedIn" class="user-name">{{ $auth.user.name }}さん</p>
       <div class="main-content">
         <div class="reservation-container">
           <p class="ttl">予約状況</p>
@@ -61,7 +61,7 @@
                 <v-select
                   v-model="reservationTime"
                   :items="reservationTimeOption"
-                  :rules="[v => !!v || '日時を選択してください']"
+                  :rules="timeRules"
                   placeholder="10:00"
                   outlined
                   required
@@ -71,7 +71,7 @@
                 <v-select
                   v-model="reservationPeopleNumber"
                   :items="reservationPeopleNumberOption"
-                  :rules="[v => !!v || '人数を選択してください']"
+                  :rules="peopleNumberRules"
                   placeholder="1人"
                   outlined
                   required
@@ -119,6 +119,17 @@ export default {
       reservationTimeOption: this.$reservationTimeOption,
       // 予約人数プルダウン用
       reservationPeopleNumberOption: this.$reservationPeopleNumberOption,
+      // v-form用
+      timeRules: [
+        (v) => {
+          return (v) ? true : '時間を入力してください';
+        }
+      ],
+      peopleNumberRules: [
+        (v) => {
+          return (v) ? true : '人数を入力してください';
+        }
+      ],
       // MDI
       iconClock: mdiClock,
       iconCloseCircleOutline: mdiCloseCircleOutline,
@@ -143,6 +154,14 @@ export default {
     getReservationTime(reservationData){
       return reservationData.pivot.reservation_date.split(' ')[1];
     },
+    // 本日の日付を取得する関数
+    getCurrentDate() {
+      const currentDate = new Date();
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth() + 1;
+      const date = currentDate.getDate();
+      this.reservationDate = year + "-" + month + "-" + date;
+    },
     //予約情報を削除する関数
     async deleteReservation(id){
       await this.$axios.delete(`${this.$axios.defaults.baseURL}auth/reservation/` + id);
@@ -150,19 +169,28 @@ export default {
     },
     // 予約情報を変更する関数
     async updateReservation(id) {
-      if(this.reservationPeopleNumber && this.reservationDate && this.reservationTime){
+      // if(this.reservationPeopleNumber && this.reservationDate && this.reservationTime){
+        try{
         const sendData = {
           number_of_people: this.reservationPeopleNumber,
           reservation_date: this.reservationDate + ' ' + this.reservationTime,
         };
         await this.$axios.put(`${this.$axios.defaults.baseURL}auth/reservation/` + id, sendData);
         location.reload()
+      } catch(error) {
+        const peopleError = error.response.data.error.number_of_people;
+        const dateError = error.response.data.error.reservation_date;
+        alert((peopleError || '')
+          + (peopleError && "\n")
+          + (dateError || '')
+        );
       }
     },
   }, // end methods
 
   created() {
     this.getUser();
+    this.getCurrentDate();
   },
 
   mounted() {

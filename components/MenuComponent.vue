@@ -24,12 +24,12 @@
         v-show="menuIsOpened == true"
         class="menu-content"
       >
-        <ul v-if="!$store.state.isLoggedIn">
+        <ul v-if="!$store.state.auth.loggedIn">
           <li><NuxtLink to="/">Home</NuxtLink></li>
           <li><NuxtLink to="/register">Registration</NuxtLink></li>
           <li><NuxtLink to="/login">Login</NuxtLink></li>
         </ul>
-        <ul v-if="$store.state.isLoggedIn">
+        <ul v-else>
           <li><NuxtLink to="/">Home</NuxtLink></li>
           <li><p @click=logout>Logout</p></li>
           <li><NuxtLink to="/mypage">Mypage</NuxtLink></li>
@@ -60,7 +60,6 @@ export default {
 
         // Vuex内のデータ破棄
         this.$store.commit('deleteFavoriteShop');
-        this.$store.commit('updateLoggedIn', false);
 
         this.$router.push("/login");
       } catch (error) {
