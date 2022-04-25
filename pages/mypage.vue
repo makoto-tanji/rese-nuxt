@@ -129,6 +129,8 @@ export default {
       iconCloseCircleOutline: mdiCloseCircleOutline,
       // ロード完了
       isLoading: true,
+      // お気に入り
+      favoriteList: [],
     };
   }, // end data
 
@@ -139,6 +141,14 @@ export default {
         `${this.$axios.defaults.baseURL}auth/user`
       );
       this.userData = userData.data;
+      // お気に入り店をVuexで保存
+      this.favoriteList = userData.data.favorites;
+      for(let i=0; i<this.favoriteList.length; i++){
+        this.$store.commit('updateFavoriteShop', {
+          index: this.favoriteList[i].id,
+          boolean: true
+        });
+      }
     },
     // 日にち(半角スペース)時間で保存されている予約時間から日にちを取り出す関数
     getReservationDate(reservationData){

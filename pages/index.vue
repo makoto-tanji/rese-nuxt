@@ -62,6 +62,8 @@ export default {
       iconMagnify: mdiMagnify,
       // ロード完了
       isLoading: true,
+      // お気に入り
+      favoriteList: [],
     }
   }, // end data
 
@@ -72,11 +74,37 @@ export default {
         `${this.$axios.defaults.baseURL}shop`
       );
       this.shopLists = resData.data.data;
+    },
+    async getUser(){
+      const userData = await this.$axios.get(
+        `${this.$axios.defaults.baseURL}auth/user`
+      );
+      // お気に入り店をVuexで保存
+      this.favoriteList = userData.data.favorites;
+      for(let i=0; i<this.favoriteList.length; i++){
+        this.$store.commit('updateFavoriteShop', {
+          index: this.favoriteList[i].id,
+          boolean: true
+        });
+      }
+    },
+    async logout() {
+      try {
+        await this.$auth.logout();
+
+        // Vuex内のデータ破棄
+        this.$store.commit('deleteFavoriteShop');
+
+        this.$router.push("/login");
+      } catch (error) {
+        console.log(error);
+      }
     }
   }, // end methods
 
   created() {
     this.getShops();
+    this.getUser();
   },
 
   computed:{
@@ -106,6 +134,10 @@ export default {
         this.isLoading = false
       }, 500)
     })
+  },
+
+  beforeDestroy() {
+    this.logout();
   }
 }
 </script>
