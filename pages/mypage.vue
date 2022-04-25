@@ -44,7 +44,7 @@
               </tr>
             </table>
             <button
-              @click="isBeingEdited = !isBeingEdited"
+              @click="toggleEdited(reservation.pivot.id)"
               class="edit-btn btn"
             >
               <span v-if="isBeingEdited">やめる</span>
@@ -113,7 +113,7 @@ export default {
       userData: '',
       testList: [],
       // 予約情報編集用
-      isBeingEdited: false,
+      isBeingEdited: [],
       reservationDate: "",
       reservationTime: "",
       reservationPeopleNumber: "",
@@ -187,6 +187,13 @@ export default {
         }
       }
     },
+    toggleEdited(id){
+      if(this.isBeingEdited[id]){
+        this.isBeingEdited[id] = false;
+      } else {
+        this.isBeingEdited[id] = true;
+      }
+    }
   }, // end methods
 
   created() {

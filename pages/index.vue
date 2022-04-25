@@ -19,7 +19,6 @@
             placeholder="All category"
           />
           <span class="partition" />
-          <v-icon class="icon">{{iconMagnify}}</v-icon>
           <v-text-field
             type="text"
             v-model="nameSearchWord"
