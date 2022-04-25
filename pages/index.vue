@@ -88,18 +88,6 @@ export default {
         });
       }
     },
-    async logout() {
-      try {
-        await this.$auth.logout();
-
-        // Vuex内のデータ破棄
-        this.$store.commit('deleteFavoriteShop');
-
-        this.$router.push("/login");
-      } catch (error) {
-        console.log(error);
-      }
-    }
   }, // end methods
 
   created() {
@@ -134,10 +122,6 @@ export default {
         this.isLoading = false
       }, 500)
     })
-  },
-
-  beforeDestroy() {
-    this.logout();
   }
 }
 </script>
