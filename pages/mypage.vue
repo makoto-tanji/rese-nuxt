@@ -43,14 +43,7 @@
                 <td>{{ reservation.pivot.number_of_people }}人</td>
               </tr>
             </table>
-            <button
-              @click="toggleEdited(reservation.pivot.id)"
-              class="edit-btn btn"
-            >
-              <span v-if="isBeingEdited">やめる</span>
-              <span v-if="!isBeingEdited">修正する</span>
-            </button>
-            <div v-if="isBeingEdited" class="edit-container">
+            <div class="edit-container">
               <v-form @submit.prevent="updateReservation(reservation.pivot.id)" class="reservation-form">
                 <input
                   type="date"
@@ -113,7 +106,6 @@ export default {
       userData: '',
       testList: [],
       // 予約情報編集用
-      isBeingEdited: [],
       reservationDate: "",
       reservationTime: "",
       reservationPeopleNumber: "",
@@ -187,13 +179,6 @@ export default {
         }
       }
     },
-    toggleEdited(id){
-      if(this.isBeingEdited[id]){
-        this.isBeingEdited[id] = false;
-      } else {
-        this.isBeingEdited[id] = true;
-      }
-    }
   }, // end methods
 
   created() {
