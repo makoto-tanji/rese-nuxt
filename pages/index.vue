@@ -24,6 +24,7 @@
             type="text"
             v-model="nameSearchWord"
             placeholder="Search ..."
+            prepend-icon="mdi-magnify"
           />
         </form>
       </div>
@@ -69,7 +70,7 @@ export default {
     // ページ読み込み時に呼ばれる。ショップデータを取得する関数
     async getShops() {
       const resData = await this.$axios.get(
-        `https://guarded-meadow-23334.herokuapp.com/api/shop`
+        `${this.$axios.defaults.baseURL}shop`
       );
       this.shopLists = resData.data.data;
     }
