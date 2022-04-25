@@ -74,7 +74,8 @@ export default {
     strategies: {
       'laravelJWT': {
         provider: 'laravel/jwt',
-        url: 'http://localhost:8000',
+        // url: 'http://localhost:8000',
+        url: 'https://dry-sands-26821.herokuapp.com',
         token: {
           maxAge: 60 * 60
         },
@@ -87,6 +88,7 @@ export default {
 
   // 以下env追加
   env: {
-    apiURL: process.env.API_URL || 'http://localhost:8000/api/'
+    // apiURL: process.env.API_URL || 'http://localhost:8000/api/'
+    apiURL: process.env.API_URL || 'https://dry-sands-26821.herokuapp.com/api/'
   }
 }
