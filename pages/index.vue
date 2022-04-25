@@ -69,7 +69,7 @@ export default {
     // ページ読み込み時に呼ばれる。ショップデータを取得する関数
     async getShops() {
       const resData = await this.$axios.get(
-        `${this.$axios.defaults.baseURL}shop`
+        `https://guarded-meadow-23334.herokuapp.com/api/shop`
       );
       this.shopLists = resData.data.data;
     }
