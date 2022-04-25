@@ -9,6 +9,8 @@
         :rules="nameRules"
         label="Username"
         placeholder="Username"
+        counter="191"
+        maxlength="191"
         required
         dense
         prepend-icon="mdi-account"
@@ -20,6 +22,7 @@
         :rules="emailRules"
         label="Email"
         placeholder="Email"
+        maxlength="191"
         required
         dense
         prepend-icon="mdi-email"
@@ -31,6 +34,7 @@
         :rules="passwordRules"
         label="Password"
         placeholder="Password"
+        maxlength="191"
         required
         dense
         type="password"
@@ -51,7 +55,6 @@ export default {
       password: null,
       // v-form
       nameRules: [
-        // v => !!v || 'お名前を入力してください',
         (v) => {
           return (v) ? true : 'お名前を入力してください';
         }
@@ -61,7 +64,7 @@ export default {
           return (v) ? true : 'メールアドレスを入力してください';
         },
         (v) => {
-          return ( /[\w\-._]+@[\w\-._]+\.[A-Za-z]+/.test(v) )? true : 'メールアドレス形式で入力してください'
+          return ( /^[\w\-._]+@[\w\-._]+\.[A-Za-z]+$/.test(v) )? true : 'メールアドレス形式で入力してください'
         },
       ],
       passwordRules: [
@@ -82,15 +85,9 @@ export default {
         });
         this.$router.push("/thanks");
       } catch(error) {
-        // alert((error.response.data.error.name || '')
-        //   + (error.response.data.error.name && '\n')
-        //   + (error.response.data.error.email || '')
-        //   + (error.response.data.error.email && '\n')
-        //   + (error.response.data.error.password || '')
-        // );
-        alert( ((error.response.data.error.name)? error.response.data.error.name + '\n' : '')
-          + ((error.response.data.error.email)? error.response.data.error.email + '\n' : '')
-          + ((error.response.data.error.password)? error.response.data.error.password + '\n' : '')
+        alert( ((error.response.data.error.name)? `${error.response.data.error.name}\n` : '')
+          + ((error.response.data.error.email)? `${error.response.data.error.email}\n` : '')
+          + ((error.response.data.error.password)? error.response.data.error.password : '')
         );
       }
     },

@@ -104,7 +104,7 @@ export default {
       errorMessage: "",
       // 予約データ送信用
       reservationDate: "",
-      reservationTime: "10:00",
+      reservationTime: "",
       reservationPeopleNumber: "",
       // ロード完了
       isLoading: true,
@@ -129,47 +129,40 @@ export default {
   }, // end data
 
   methods: {
-    // 本日の日付を取得する関数
-    getCurrentDate() {
-      const currentDate = new Date();
-      const year = currentDate.getFullYear();
-      const month = currentDate.getMonth() + 1;
-      const date = currentDate.getDate();
-      this.reservationDate = year + "-" + month + "-" + date;
-    },
     // 店舗情報を取得する関数
     async getShop() {
       const resData = await this.$axios.get(
-        `${this.$axios.defaults.baseURL}shop/` + this.$route.params.id
+        `${this.$axios.defaults.baseURL}shop/${this.$route.params.id}`
       );
       this.shopData = resData.data.data[0];
       this.areaName = resData.data.data[0].area.area_name;
     },
     // 予約情報をDBに保存する関数
     async reserve() {
-      try {
-        const sendData = {
-          shop_id: this.shopData.id,
-          user_id: this.$auth.user.id,
-          number_of_people: this.reservationPeopleNumber,
-          reservation_date: this.reservationDate + ' ' + this.reservationTime,
-        };
-        await this.$axios.post(`${this.$axios.defaults.baseURL}auth/reservation`, sendData);
-        this.$router.push("/done");
-      } catch(error) {
-        const peopleError = error.response.data.error.number_of_people;
-        const dateError = error.response.data.error.reservation_date;
-        alert((peopleError || '')
-          + (peopleError && "\n")
-          + (dateError || '')
-        );
+      if( !this.$store.state.auth.loggedIn ){
+        alert('再度ログインしてください');
+        this.$router.push("/login");
+      } else {
+        try {
+          const sendData = {
+            shop_id: this.shopData.id,
+            user_id: this.$auth.user.id,
+            number_of_people: this.reservationPeopleNumber,
+            reservation_date: `${this.reservationDate} ${this.reservationTime}`,
+          };
+          await this.$axios.post(`${this.$axios.defaults.baseURL}auth/reservation`, sendData);
+          this.$router.push("/done");
+        } catch(error) {
+          alert( ((error.response.data.error.reservation_date)? `${error.response.data.error.reservation_date}\n` : '')
+            + ((error.response.data.error.number_of_people)? error.response.data.error.number_of_people : '')
+          );
+        }
       }
     },
   }, // end methods
 
   created() {
     this.getShop();
-    this.getCurrentDate();
   },
 
   mounted() {
@@ -253,8 +246,7 @@ img{
   border-radius: 10px;
 }
 td{
-  width: 100px;
-  padding: 5px 0px;
+  padding: 5px 10px 5px 0px;
 }
 .reservation-btn{
   width: 100%;

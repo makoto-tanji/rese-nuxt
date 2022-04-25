@@ -61,7 +61,7 @@ export default {
     // ハート枠をクリックした時に呼ばれる
     // お気に入りに追加する関数
     async addFavorite(shopId) {
-      if( !this.$auth.loggedIn ){
+      if( !this.$store.state.auth.loggedIn ){
         alert('ログイン後にお気に入りに追加できます');
       } else {
         const sendFavoriteData = {
@@ -79,15 +79,20 @@ export default {
     // ハート(塗りつぶし)をクリックした時に呼ばれる
     // お気に入りを解除する関数
     async removeFavorite(shopId) {
-      const deleteFavoriteData = {
-        shopId: shopId,
-        userId: this.$auth.user.id
-      };
-      await this.$axios.post(`${this.$axios.defaults.baseURL}auth/favorite/destroy`, deleteFavoriteData);
-      this.$store.commit('updateFavoriteShop', {
-        index: shopId,
-        boolean: false
-      })
+      if( !this.$store.state.auth.loggedIn ){
+        alert('再度ログインしてください');
+        this.$router.push("/login");
+      } else {
+        const deleteFavoriteData = {
+          shopId: shopId,
+          userId: this.$auth.user.id
+        };
+        await this.$axios.post(`${this.$axios.defaults.baseURL}auth/favorite/destroy`, deleteFavoriteData);
+        this.$store.commit('updateFavoriteShop', {
+          index: shopId,
+          boolean: false
+        })
+      }
     }
   }, // end methods
 }

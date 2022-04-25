@@ -44,7 +44,7 @@ export default {
   buildModules: [
     // 以下追加
     // Simple usage
-    '@nuxtjs/vuetify',
+    // '@nuxtjs/vuetify',
 
     // With options
     ['@nuxtjs/vuetify', { /* module options */ }]

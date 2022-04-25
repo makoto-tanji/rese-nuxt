@@ -106,6 +106,8 @@ import { mdiClock } from '@mdi/js';
 import { mdiCloseCircleOutline } from '@mdi/js';
 
 export default {
+  middleware: 'auth',
+
   data() {
     return {
       userData: '',
@@ -113,7 +115,7 @@ export default {
       // 予約情報編集用
       isBeingEdited: false,
       reservationDate: "",
-      reservationTime: "10:00",
+      reservationTime: "",
       reservationPeopleNumber: "",
       // 予約時間プルダウン用
       reservationTimeOption: this.$reservationTimeOption,
@@ -154,43 +156,41 @@ export default {
     getReservationTime(reservationData){
       return reservationData.pivot.reservation_date.split(' ')[1];
     },
-    // 本日の日付を取得する関数
-    getCurrentDate() {
-      const currentDate = new Date();
-      const year = currentDate.getFullYear();
-      const month = currentDate.getMonth() + 1;
-      const date = currentDate.getDate();
-      this.reservationDate = year + "-" + month + "-" + date;
-    },
     //予約情報を削除する関数
     async deleteReservation(id){
-      await this.$axios.delete(`${this.$axios.defaults.baseURL}auth/reservation/` + id);
-      this.getUser();
+      if( !this.$store.state.auth.loggedIn ){
+        alert('再度ログインしてください');
+        this.$router.push("/login");
+      } else {
+        await this.$axios.delete(`${this.$axios.defaults.baseURL}auth/reservation/` + id);
+        this.getUser();
+      }
     },
     // 予約情報を変更する関数
     async updateReservation(id) {
-      // if(this.reservationPeopleNumber && this.reservationDate && this.reservationTime){
+      if( !this.$store.state.auth.loggedIn ){
+        alert('再度ログインしてください');
+        this.$router.push("/login");
+      } else {
         try{
-        const sendData = {
-          number_of_people: this.reservationPeopleNumber,
-          reservation_date: this.reservationDate + ' ' + this.reservationTime,
-        };
-        await this.$axios.put(`${this.$axios.defaults.baseURL}auth/reservation/` + id, sendData);
-        location.reload()
-      } catch(error) {
-        const peopleError = error.response.data.error.number_of_people;
-        const dateError = error.response.data.error.reservation_date;
-        alert((peopleError || '')
-          + (peopleError && "\n")
-          + (dateError || '')
-        );
+          const sendData = {
+            number_of_people: this.reservationPeopleNumber,
+            reservation_date: this.reservationDate + ' ' + this.reservationTime,
+          };
+          await this.$axios.put(`${this.$axios.defaults.baseURL}auth/reservation/${id}`, sendData);
+          alert("予約内容の変更が完了しました")
+          location.reload()
+        } catch(error) {
+          alert( ((error.response.data.error.reservation_date)? `${error.response.data.error.reservation_date}\n` : '')
+            + ((error.response.data.error.number_of_people)? error.response.data.error.number_of_people : '')
+          );
+        }
       }
     },
   }, // end methods
 
   created() {
     this.getUser();
-    this.getCurrentDate();
   },
 
   mounted() {
