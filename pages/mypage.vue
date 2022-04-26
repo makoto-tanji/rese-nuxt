@@ -266,6 +266,7 @@ td{
   margin-top: 10px;
 }
 input{
+  width: 100%;
   background-color: #fff;
   margin-bottom: 10px;
 }

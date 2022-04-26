@@ -137,7 +137,7 @@ li{
   margin: 20px;
 }
 li > *{
-  color: rgb(53, 96, 246);
+  color: #1976d2;
   font-size: 26px;
   font-weight: bold;
   cursor: pointer;
